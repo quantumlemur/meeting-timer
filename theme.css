@@ -33,10 +33,16 @@ body {
 	color: red;
 }
 
-.schedule {
-	width: 50%;
+.schedulePane {
+	width: 70%;
 	height: 90vh;
 	margin: 5vh;
+}
+
+.schedule {
+	margin: 2%;
+	height: 96%;
+	width: 46%;
 }
 
 .event {

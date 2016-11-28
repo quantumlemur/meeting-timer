@@ -31,7 +31,7 @@ var ViewModel = function() {
 
 		// var stack = d3.layout.stack()
 
-		var div = d3.select('div.schedule').selectAll('.event')
+		var div = d3.select('#scheduled').selectAll('.event')
 				.data(data)
 			.enter().append('div')
 				.attr('class', 'event')
@@ -40,7 +40,7 @@ var ViewModel = function() {
 				.text(function(d) { return d.name })
 
 		function position() {
-			this.style('left', function(d) { return "0px"; })
+			this.style('left', function(d) { return "0%"; })
 					.style('width', function(d) { return "100%"; })
 					.style('top', function(d) { return timeScale(d.scheduledStart) + '%'; })
 					.style('height', function(d) { return timeScale(d.scheduledEnd) - timeScale(d.scheduledStart) + '%'; })
