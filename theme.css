@@ -1,0 +1,45 @@
+body {
+	margin: 0px;
+}
+
+.background {
+	display: table;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+
+	background-color: black;
+}
+
+.timerBox {
+	display: table-cell;
+	vertical-align: middle;
+
+	text-align: center;
+	font-family: sans-serif;
+	font-weight:bold;
+	font-size: 40em;
+}
+
+.normalTime {
+	color: white;
+}
+
+.warningTime {
+	color: yellow;
+}
+
+.overTime {
+	color: red;
+}
+
+.schedule {
+	width: 50%;
+	height: 90vh;
+	margin: 5vh;
+}
+
+.event {
+	text-align: center;
+	border: solid 1px black;
+}
