@@ -40,6 +40,14 @@ body {
 	width: 60%;
 	height: 90vh;
 	margin: 3vh;
+	float: left;
+}
+
+.controlsPane {
+	width: 30%;
+	height: 90vh;
+	margin: 3vh;
+	float: right;
 }
 
 .schedule {
@@ -83,11 +91,11 @@ body {
 	left: 0;
 }
 
-#left {
+.left {
 	float: left;
 }
 
-#right {
+.right {
 	float: right;
 }
 
@@ -106,13 +114,14 @@ body {
 .majorLine {
 	stroke-width: 1;
 	stroke: black;
-	stroke-opacity: .4;
+	stroke-opacity: .3;
 	shape-rendering: crispEdges;
 }
 
 .majorLineText {
 	font-family: sans-serif;
 	font-size: 1.2em;
+	fill-opacity: .8;
 	text-anchor: middle;
 	dominant-baseline: middle;
 	shape-rendering: crispEdges;
@@ -128,7 +137,7 @@ body {
 
 .eventText {
 	font-family: sans-serif;
-	font-size: 1em;
+	font-size: 1.2em;
 	font-weight: bold;
 	fill: black;
 	fill-opacity: .75;
@@ -154,4 +163,12 @@ body {
 	stroke: red;
 	stroke-opacity: .8;
 	shape-rendering: auto;
+}
+
+.infoPane {
+	height: 50%;
+}
+
+.half {
+	width: 49%;
 }

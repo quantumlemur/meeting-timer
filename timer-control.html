@@ -2,8 +2,8 @@
 <meta charset="utf-8">
 <head>
 <link rel="stylesheet" type="text/css" href="theme.css">
-<!-- <link rel="stylesheet" href="bootstrap.min.css">
- --><script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+<link rel="stylesheet" href="bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="moment.min.js"></script>
@@ -11,10 +11,59 @@
 <body>
 	<div class=schedulePane>
 		<div class=scheduleHeader>
-			<div id=left class=scheduleHeaderText>Scheduled Timeline</div>
-			<div id=right class=scheduleHeaderText>Actual Timeline</div>
+			<div class="scheduleHeaderText left">Scheduled Timeline</div>
+			<div class="scheduleHeaderText right">Actual Timeline</div>
 		</div>
 		<div class="timelineDiv"></div>
 	</div>
+	<div class=controlsPane>
+		<div class=infoPane>
+			<h1>Current Event</h1>
+			<p data-bind:'text: currentEventName'></p>
+			<table class=table>
+				<thead>
+					<tr>
+						<th></th>
+						<th>Scheduled</th>
+						<th>Actual</th>
+						<th>Difference</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Start</td>
+						<td data-bind:'text: scheduledStart'></td>
+						<td data-bind:'text: actualStart'></td>
+						<td data-bind:'text: startDifference'></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="buttonPane">
+			<p>
+				<button type="button" class="btn btn-primary btn-lg btn-block active">Automatically start next event</button>
+			</p>
+			<p>
+				<div class="half left">
+					<button type="button" class="btn btn-primary btn-lg btn-block active col-md-6;">Make up slippage with gaps</button>
+				</div>
+				<div class="half right">
+					<button type="button" class="btn btn-default btn-lg btn-block col-md-6">Maintain gaps</button>
+				</div>
+			</p>
+			<p>
+				<div class="half left">
+					<button type="button" class="btn btn-primary btn-lg btn-block active col-md-6;">Flexible ending time</button>
+				</div>
+				<div class="half right">
+					<button type="button" class="btn btn-default btn-lg btn-block col-md-6">Maintain ending time</button>
+				</div>
+			</p>
+		</div>
+
+
+	</div>
+
+
 	<script src="timer-control.js"></script>
 </body>
