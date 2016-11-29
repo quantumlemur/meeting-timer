@@ -18,7 +18,7 @@ body {
 	text-align: center;
 	font-family: sans-serif;
 	font-weight:bold;
-	font-size: 40em;
+	font-size: 35em;
 }
 
 .normalTime {
@@ -36,16 +36,37 @@ body {
 .schedulePane {
 	width: 70%;
 	height: 90vh;
-	margin: 5vh;
+	margin: 3vh;
 }
 
 .schedule {
 	margin: 2%;
 	height: 96%;
-	width: 46%;
+	width: 40%;
+	font-family: sans-serif;
+}
+
+.scheduleHeader {
+	height: 5%;
+	text-align: center;
+}
+
+.actualSchedule {
+	height: 95%;
+}
+
+#scheduled {
+	float: left;
+}
+
+#actual {
+	float: right;
 }
 
 .event {
 	text-align: center;
-	border: solid 1px black;
+}
+
+.svgOverlay {
+	pointer-events: none;	
 }
