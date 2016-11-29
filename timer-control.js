@@ -9,15 +9,15 @@ var ViewModel = function() {
 
 	// assumed to be sorted by scheduledStart
 	var data = [
-			{"id":"a", "scheduledStart":"2016-11-29 09:20:00", "scheduledEnd":"2016-11-29 10:20:00", "actualStart":"2016-11-29 09:20:00", "actualEnd":"2016-11-29 10:20:00", "done":true, "active":false, "name":"lunch"},
-			{"id":"b", "scheduledStart":"2016-11-29 10:20:00", "scheduledEnd":"2016-11-29 11:20:00", "actualStart":"2016-11-29 10:20:00", "actualEnd":"2016-11-29 11:20:00", "done":false, "active":true, "name":"meeting"},
-			{"id":"c", "scheduledStart":"2016-11-29 11:20:00", "scheduledEnd":"2016-11-29 12:20:00", "actualStart":"2016-11-29 11:20:00", "actualEnd":"2016-11-29 12:20:00", "done":false, "active":false, "name":"another meeting"},
-			{"id":"d", "scheduledStart":"2016-11-29 12:20:00", "scheduledEnd":"2016-11-29 13:20:00", "actualStart":"2016-11-29 12:20:00", "actualEnd":"2016-11-29 13:20:00", "done":false, "active":false, "name":"coffee break"},
-			{"id":"e", "scheduledStart":"2016-11-29 13:20:00", "scheduledEnd":"2016-11-29 14:20:00", "actualStart":"2016-11-29 13:20:00", "actualEnd":"2016-11-29 14:20:00", "done":false, "active":false, "name":"networking"},
-			{"id":"f", "scheduledStart":"2016-11-29 14:20:00", "scheduledEnd":"2016-11-29 15:20:00", "actualStart":"2016-11-29 14:20:00", "actualEnd":"2016-11-29 15:20:00", "done":false, "active":false, "name":"yet another meeting"},
-			{"id":"g", "scheduledStart":"2016-11-29 15:20:00", "scheduledEnd":"2016-11-29 16:20:00", "actualStart":"2016-11-29 15:20:00", "actualEnd":"2016-11-29 16:20:00", "done":false, "active":false, "name":"watching paint dry"},
-			{"id":"h", "scheduledStart":"2016-11-29 16:20:00", "scheduledEnd":"2016-11-29 17:20:00", "actualStart":"2016-11-29 16:20:00", "actualEnd":"2016-11-29 17:20:00", "done":false, "active":false, "name":"evaporating into thin air"},
-			{"id":"i", "scheduledStart":"2016-11-29 17:20:00", "scheduledEnd":"2016-11-29 18:20:00", "actualStart":"2016-11-29 17:20:00", "actualEnd":"2016-11-29 18:20:00", "done":false, "active":false, "name":"unicycle practice"}
+			{"id":"a", "scheduledStart":"2016-11-29 09:20:00", "scheduledEnd":"2016-11-29 10:20:00", "actualStart":"2016-11-29 09:20:00", "actualEnd":"2016-11-29 10:20:00", "done":true, "active":false, "name":"lunch", "speaker":""},
+			{"id":"b", "scheduledStart":"2016-11-29 10:20:00", "scheduledEnd":"2016-11-29 11:20:00", "actualStart":"2016-11-29 10:20:00", "actualEnd":"2016-11-29 11:20:00", "done":false, "active":true, "name":"meeting", "speaker":"speaker"},
+			{"id":"c", "scheduledStart":"2016-11-29 11:20:00", "scheduledEnd":"2016-11-29 12:20:00", "actualStart":"2016-11-29 11:20:00", "actualEnd":"2016-11-29 12:20:00", "done":false, "active":false, "name":"another meeting", "speaker":"another speaker"},
+			{"id":"d", "scheduledStart":"2016-11-29 12:20:00", "scheduledEnd":"2016-11-29 13:20:00", "actualStart":"2016-11-29 12:20:00", "actualEnd":"2016-11-29 13:20:00", "done":false, "active":false, "name":"coffee break", "speaker":""},
+			{"id":"e", "scheduledStart":"2016-11-29 13:20:00", "scheduledEnd":"2016-11-29 14:20:00", "actualStart":"2016-11-29 13:20:00", "actualEnd":"2016-11-29 14:20:00", "done":false, "active":false, "name":"networking", "speaker":""},
+			{"id":"f", "scheduledStart":"2016-11-29 14:20:00", "scheduledEnd":"2016-11-29 15:20:00", "actualStart":"2016-11-29 14:20:00", "actualEnd":"2016-11-29 15:20:00", "done":false, "active":false, "name":"yet another meeting", "speaker":"the pope"},
+			{"id":"g", "scheduledStart":"2016-11-29 15:20:00", "scheduledEnd":"2016-11-29 16:20:00", "actualStart":"2016-11-29 15:20:00", "actualEnd":"2016-11-29 16:20:00", "done":false, "active":false, "name":"watching paint dry", "speaker":"Mario the Painter"},
+			{"id":"h", "scheduledStart":"2016-11-29 16:20:00", "scheduledEnd":"2016-11-29 17:20:00", "actualStart":"2016-11-29 16:20:00", "actualEnd":"2016-11-29 17:20:00", "done":false, "active":false, "name":"evaporating into thin air", "speaker":"a water molecule"},
+			{"id":"i", "scheduledStart":"2016-11-29 17:20:00", "scheduledEnd":"2016-11-29 18:20:00", "actualStart":"2016-11-29 17:20:00", "actualEnd":"2016-11-29 18:20:00", "done":false, "active":false, "name":"unicycle practice", "speaker":"a clown car full of clowns"}
 		]
 
 	// $.ajax({
@@ -47,13 +47,13 @@ var ViewModel = function() {
 	var stepTime = minHour
 	while (stepTime <= maxHour) {
 		timeOverlayMajor.push({
-			label: stepTime.format('hh:mm A'),
+			label: stepTime.format('h:mm A'),
 			y: timeScale(stepTime.valueOf()) + '%'
 		})
 		// half hour
 		stepTime.add(30, 'minutes')
 		timeOverlayMinor.push({
-			label: stepTime.format('hh:mm A'),
+			label: stepTime.format('h:mm A'),
 			y: timeScale(stepTime.valueOf()) + '%'
 		})
 		stepTime.add(30, 'minutes')
@@ -71,6 +71,10 @@ var ViewModel = function() {
 		d.heightScheduled = timeScale(d.endTime.valueOf()) - timeScale(d.startTime.valueOf())
 		d.yActual = timeScale(d.actualStartTime.valueOf())
 		d.heightActual = timeScale(d.actualEndTime.valueOf()) - timeScale(d.actualStartTime.valueOf())
+
+		d.displayNameScheduled = d.name + ' (' + d.endTime.diff(d.startTime, 'minutes') + 'm)'
+		d.displayNameActual = d.name + ' (' + d.actualEndTime.diff(d.actualStartTime, 'minutes') + 'm)'
+
 	})
 
 
@@ -122,9 +126,15 @@ var ViewModel = function() {
 
 		events.append('text')
 				.attr('class', 'eventText')
-				.text(function(d) { return d.name })
+				.text(function(d) { return d.displayNameScheduled })
 				.attr('x', '2%')
 				.attr('y', function(d) { return d.yScheduled+1+'%' })
+
+		events.append('text')
+				.attr('class', 'speakerText')
+				.text(function(d) { return d.speaker })
+				.attr('x', '2%')
+				.attr('y', function(d) { return d.yScheduled+3.5+'%' })
 
 		// right
 		events.append('rect')
@@ -137,10 +147,15 @@ var ViewModel = function() {
 
 		events.append('text')
 				.attr('class', 'eventText')
-				.text(function(d) { return d.name })
+				.text(function(d) { return d.displayNameActual })
 				.attr('x', LofR+2+'%')
 				.attr('y', function(d) { return d.yActual+1+'%' })
 
+		events.append('text')
+				.attr('class', 'speakerText')
+				.text(function(d) { return d.speaker })
+				.attr('x', LofR+2+'%')
+				.attr('y', function(d) { return d.yScheduled+3.5+'%' })
 
 
 
@@ -159,7 +174,7 @@ var ViewModel = function() {
 		// left lines
 		majorLines.append('line')
 				.attr('class', 'majorLine')
-				.attr('x1', '0%')
+				.attr('x1', '1%')
 				.attr('y1', function(d) { return d.y })
 				.attr('x2', RofL+3+"%")
 				.attr('y2', function(d) { return d.y })
@@ -169,7 +184,7 @@ var ViewModel = function() {
 				.attr('class', 'majorLine')
 				.attr('x1', LofR-3+"%")
 				.attr('y1', function(d) { return d.y })
-				.attr('x2', '100%')
+				.attr('x2', '99%')
 				.attr('y2', function(d) { return d.y })
 
 		// minor lines
@@ -180,7 +195,7 @@ var ViewModel = function() {
 		// left lines
 		minorLines.append('line')
 				.attr('class', 'minorLine')
-				.attr('x1', '0%')
+				.attr('x1', '1%')
 				.attr('y1', function(d) { return d.y })
 				.attr('x2', RofL+1+"%")
 				.attr('y2', function(d) { return d.y })
@@ -190,7 +205,7 @@ var ViewModel = function() {
 				.attr('class', 'minorLine')
 				.attr('x1', LofR-1+"%")
 				.attr('y1', function(d) { return d.y })
-				.attr('x2', '100%')
+				.attr('x2', '99%')
 				.attr('y2', function(d) { return d.y })
 
 
