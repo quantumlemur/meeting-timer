@@ -9,15 +9,15 @@ var ViewModel = function() {
 
 	// assumed to be sorted by scheduledStart
 	var data = [
-			{"id":"a", "scheduledStart":"2016-11-28T09:20:00", "scheduledEnd":"2016-11-28T10:20:00", "actualStart":"2016-11-28T09:20:00", "actualEnd":"2016-11-28T10:20:00", "done":true, "active":false, "name":"lunch"},
-			{"id":"b", "scheduledStart":"2016-11-28T10:20:00", "scheduledEnd":"2016-11-28T11:20:00", "actualStart":"2016-11-28T10:20:00", "actualEnd":"2016-11-28T11:20:00", "done":false, "active":true, "name":"meeting"},
-			{"id":"c", "scheduledStart":"2016-11-28T11:20:00", "scheduledEnd":"2016-11-28T12:20:00", "actualStart":"2016-11-28T11:20:00", "actualEnd":"2016-11-28T12:20:00", "done":false, "active":false, "name":"another meeting"},
-			{"id":"d", "scheduledStart":"2016-11-28T12:20:00", "scheduledEnd":"2016-11-28T13:20:00", "actualStart":"2016-11-28T12:20:00", "actualEnd":"2016-11-28T13:20:00", "done":false, "active":false, "name":"coffee break"},
-			{"id":"e", "scheduledStart":"2016-11-28T13:20:00", "scheduledEnd":"2016-11-28T14:20:00", "actualStart":"2016-11-28T13:20:00", "actualEnd":"2016-11-28T14:20:00", "done":false, "active":false, "name":"networking"},
-			{"id":"f", "scheduledStart":"2016-11-28T14:20:00", "scheduledEnd":"2016-11-28T15:20:00", "actualStart":"2016-11-28T14:20:00", "actualEnd":"2016-11-28T15:20:00", "done":false, "active":false, "name":"yet another meeting"},
-			{"id":"g", "scheduledStart":"2016-11-28T15:20:00", "scheduledEnd":"2016-11-28T16:20:00", "actualStart":"2016-11-28T15:20:00", "actualEnd":"2016-11-28T16:20:00", "done":false, "active":false, "name":"watching paint dry"},
-			{"id":"h", "scheduledStart":"2016-11-28T16:20:00", "scheduledEnd":"2016-11-28T17:20:00", "actualStart":"2016-11-28T16:20:00", "actualEnd":"2016-11-28T17:20:00", "done":false, "active":false, "name":"evaporating into thin air"},
-			{"id":"i", "scheduledStart":"2016-11-28T17:20:00", "scheduledEnd":"2016-11-28T18:20:00", "actualStart":"2016-11-28T17:20:00", "actualEnd":"2016-11-28T18:20:00", "done":false, "active":false, "name":"unicycle practice"}
+			{"id":"a", "scheduledStart":"2016-11-29 09:20:00", "scheduledEnd":"2016-11-29 10:20:00", "actualStart":"2016-11-29 09:20:00", "actualEnd":"2016-11-29 10:20:00", "done":true, "active":false, "name":"lunch"},
+			{"id":"b", "scheduledStart":"2016-11-29 10:20:00", "scheduledEnd":"2016-11-29 11:20:00", "actualStart":"2016-11-29 10:20:00", "actualEnd":"2016-11-29 11:20:00", "done":false, "active":true, "name":"meeting"},
+			{"id":"c", "scheduledStart":"2016-11-29 11:20:00", "scheduledEnd":"2016-11-29 12:20:00", "actualStart":"2016-11-29 11:20:00", "actualEnd":"2016-11-29 12:20:00", "done":false, "active":false, "name":"another meeting"},
+			{"id":"d", "scheduledStart":"2016-11-29 12:20:00", "scheduledEnd":"2016-11-29 13:20:00", "actualStart":"2016-11-29 12:20:00", "actualEnd":"2016-11-29 13:20:00", "done":false, "active":false, "name":"coffee break"},
+			{"id":"e", "scheduledStart":"2016-11-29 13:20:00", "scheduledEnd":"2016-11-29 14:20:00", "actualStart":"2016-11-29 13:20:00", "actualEnd":"2016-11-29 14:20:00", "done":false, "active":false, "name":"networking"},
+			{"id":"f", "scheduledStart":"2016-11-29 14:20:00", "scheduledEnd":"2016-11-29 15:20:00", "actualStart":"2016-11-29 14:20:00", "actualEnd":"2016-11-29 15:20:00", "done":false, "active":false, "name":"yet another meeting"},
+			{"id":"g", "scheduledStart":"2016-11-29 15:20:00", "scheduledEnd":"2016-11-29 16:20:00", "actualStart":"2016-11-29 15:20:00", "actualEnd":"2016-11-29 16:20:00", "done":false, "active":false, "name":"watching paint dry"},
+			{"id":"h", "scheduledStart":"2016-11-29 16:20:00", "scheduledEnd":"2016-11-29 17:20:00", "actualStart":"2016-11-29 16:20:00", "actualEnd":"2016-11-29 17:20:00", "done":false, "active":false, "name":"evaporating into thin air"},
+			{"id":"i", "scheduledStart":"2016-11-29 17:20:00", "scheduledEnd":"2016-11-29 18:20:00", "actualStart":"2016-11-29 17:20:00", "actualEnd":"2016-11-29 18:20:00", "done":false, "active":false, "name":"unicycle practice"}
 		]
 
 	// $.ajax({
@@ -29,7 +29,6 @@ var ViewModel = function() {
 	// 		self.render()
 	// 	}
 	// })
-
 
 	var minTime = moment.min(moment(data[0].scheduledStart), moment(data[0].actualStart))
 	var maxTime = moment.max(moment(data[data.length-1].scheduledEnd), moment(data[data.length-1].actualEnd))
@@ -106,8 +105,6 @@ var ViewModel = function() {
 				.attr('y', '0%')
 				.attr('width', RofL+'%')
 				.attr('height', '100%')
-
-
 
 
 		var events = timelineSVG.selectAll('.event')
@@ -197,11 +194,27 @@ var ViewModel = function() {
 				.attr('y2', function(d) { return d.y })
 
 
+		// current time
+		timelineSVG.append('line')
+				.attr('class', 'currentTimeLine')
+				.attr('x1', '0%')
+				.attr('x2', '100%')
+				.attr('y1', timeScale(moment())+'%')
+				.attr('y2', timeScale(moment())+'%')
+
 	}
 
 
-
 	render()
+
+	var updateCurrentTimeLine = function() {
+		d3.select('.currentTimeLine').transition()
+			.duration(100)
+			.attr('y1', timeScale(moment())+'%')
+			.attr('y2', timeScale(moment())+'%')
+	}
+
+	setInterval(updateCurrentTimeLine, 10000)
 }
 
 ko.applyBindings(new ViewModel());

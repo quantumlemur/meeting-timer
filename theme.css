@@ -72,7 +72,6 @@ body {
 	height: 100%;
 	vertical-align: top;
 	overflow: hidden;
-	shape-rendering: crispEdges;
 }
 
 .svg-content-responsive {
@@ -106,6 +105,7 @@ body {
 	stroke-width: 2;
 	stroke: black;
 	stroke-opacity: .4;
+	shape-rendering: crispEdges;
 }
 
 .majorLineText {
@@ -113,6 +113,8 @@ body {
 	font-size: 1em;
 	text-anchor: middle;
 	dominant-baseline: middle;
+	shape-rendering: crispEdges;
+
 }
 
 .minorLine {
@@ -120,6 +122,7 @@ body {
 	stroke: black;
 	stroke-dasharray: 1, 1;
 	stroke-opacity: .3;
+	shape-rendering: crispEdges;
 }
 
 .eventText {
@@ -132,4 +135,13 @@ body {
 
 .backgroundRect {
 	fill: #dddddd;
+	rx: 5;
+	ry: 5;
+}
+
+.currentTimeLine {
+	stroke-width: 3;
+	stroke: red;
+	stroke-opacity: .8;
+	shape-rendering: auto;
 }
