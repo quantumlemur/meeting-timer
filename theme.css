@@ -95,6 +95,8 @@ body {
 	text-align: center;
 	rx: 5;
 	ry: 5;
+	shape-rendering: crispEdges;
+
 }
 
 .svgOverlay {
@@ -102,7 +104,7 @@ body {
 }
 
 .majorLine {
-	stroke-width: 2;
+	stroke-width: 1;
 	stroke: black;
 	stroke-opacity: .4;
 	shape-rendering: crispEdges;
@@ -121,22 +123,23 @@ body {
 	stroke-width: 1;
 	stroke: black;
 	stroke-dasharray: 1, 1;
-	stroke-opacity: .3;
+	stroke-opacity: .2;
 	shape-rendering: crispEdges;
 }
 
 .eventText {
 	font-family: sans-serif;
 	font-size: 1em;
+	font-weight: bold;
 	fill: black;
-	fill-opacity: .8;
+	fill-opacity: .7;
 	dominant-baseline: hanging;
 }
 
 .backgroundRect {
 	fill: #dddddd;
-	rx: 5;
-	ry: 5;
+	rx: 10;
+	ry: 10;
 }
 
 .currentTimeLine {
