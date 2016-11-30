@@ -21,6 +21,15 @@ body {
 	font-size: 35em;
 }
 
+.smallTimerBox {
+	font-family: sans-serif;
+	font-weight: bold;
+	font-size: 3em;
+	text-align: center;
+	background-color: black;
+
+}
+
 .normalTime {
 	color: white;
 }
@@ -171,4 +180,8 @@ body {
 
 .half {
 	width: 49%;
+}
+
+.h1 {
+	text-align: center;
 }

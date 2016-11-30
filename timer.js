@@ -2,14 +2,14 @@ var ViewModel = function() {
 	var self = this;
 
 
-	self.active = ko.observable(false)
+	self.active = ko.observable(true)
 	self.name = ko.observable("")
 	self.start = new Date()
-	self.warn = new Date()
-	self.end = new Date()
+	self.warn = new Date() + 1000*60*8
+	self.end = new Date() + 1000*60*10
 	self.flash = ko.observable(false)
 
-	self.timeLeft = ko.observable(0)
+	self.timeLeft = ko.observable(60*10)
 
 	self.parsedTime = ko.computed(function() {
 		var time = self.timeLeft()
@@ -58,11 +58,12 @@ var ViewModel = function() {
 		})
 	}
 
+
 	// decrement timer
 	setInterval(function() { self.timeLeft(self.timeLeft() - 1) }, 1000)
 
-	// refresh timer every ten seconds
-	setInterval(refreshData, 5000)
+	// refresh timer every five seconds
+	// setInterval(refreshData, 5000)
 }
 
 ko.applyBindings(new ViewModel());

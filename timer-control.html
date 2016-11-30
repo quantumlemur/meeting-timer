@@ -11,35 +11,59 @@
 <body>
 	<div class=schedulePane>
 		<div class=scheduleHeader>
-			<div class="scheduleHeaderText left">Scheduled Timeline</div>
-			<div class="scheduleHeaderText right">Actual Timeline</div>
+			<div class="scheduleHeaderText left h1">Scheduled Timeline</div>
+			<div class="scheduleHeaderText right h1">Actual Timeline</div>
 		</div>
 		<div class="timelineDiv"></div>
 	</div>
 	<div class=controlsPane>
 		<div class=infoPane>
 			<h1>Current Event</h1>
-			<p data-bind:'text: currentEventName'></p>
+			<div class=smallTimerBox data-bind="css: timeStatusClass">
+			  <span data-bind='text: parsedTime'></span>
+			</div>
+			<p>Name: <span data-bind='text: currentEventName'></span></p>
+			<p>Speaker: <span data-bind='text: currentSpeaker'></span></p>
 			<table class=table>
 				<thead>
 					<tr>
 						<th></th>
-						<th>Scheduled</th>
-						<th>Actual</th>
-						<th>Difference</th>
+						<th>Start</th>
+						<th>End</th>
+						<th>Duration</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>Start</td>
-						<td data-bind:'text: scheduledStart'></td>
-						<td data-bind:'text: actualStart'></td>
-						<td data-bind:'text: startDifference'></td>
+						<td>Scheduled</td>
+						<td data-bind='text: scheduledStart'></td>
+						<td data-bind='text: scheduledEnd'></td>
+						<td><span data-bind='text: scheduledDuration'></span>m</td>
+					</tr>
+					<tr>
+						<td>Actual</td>
+						<td data-bind='text: actualStart'></td>
+						<td data-bind='text: actualEnd'></td>
+						<td><span data-bind='text: actualDuration'></span>m</td>
+					</tr>
+					<tr>
+						<td>Difference</td>
+						<td data-bind='text: differenceStart'></td>
+						<td data-bind='text: differenceEnd'></td>
+						<td data-bind='text: differenceDuration'></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<div class="buttonPane">
+			<p>
+				<button id="endButton" type="button" class="btn btn-lg btn-block" disabled="disabled">End current event</button>
+			</p>
+			<p>
+				<button id="startButton" type="button" class="btn btn-lg btn-block" data-bind="click: startEvent">Start event</button>
+			</p>
+			<hr>
+			<h1>Controls</h1>
 			<p>
 				<button type="button" class="btn btn-primary btn-lg btn-block active">Automatically start next event</button>
 			</p>

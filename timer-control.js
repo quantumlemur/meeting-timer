@@ -6,18 +6,64 @@ var ViewModel = function() {
 	var color = d3.scale.category20c()
 
 
+	self.warningTime = ko.observable(120) // seconds
+
+	self.active = ko.observable(false)
+	self.flash = ko.observable(true)
+
+	self.parsedTime = ko.observable('')
+	self.timeStatusClass = ko.observable('normalTime')
+
+	self.supposedToEnd = moment()
+
+	self.updateParsedTime = function() {
+		var time
+		if (self.active()) {
+			time = self.supposedToEnd.diff(moment(), 'seconds')
+		} else {
+			time = self.currentEvent().actualEndTime.diff(self.currentEvent().actualStartTime, 'seconds')
+		}
+
+		var negative = time < 0 ? "-" : ""
+		time = Math.abs(time)
+		var seconds = time % 60
+		var minutes = (time - seconds)/60 % 60
+		var hours = (time - minutes*60 - seconds)/3600
+		var s = ("0" + seconds).slice(-2)
+		var m = ("0" + minutes + ":").slice(-3)
+		var h = hours > 0 ? hours+":" : ""
+		self.parsedTime(negative + h + m + s)
+
+		if (negative == '-') {
+			self.timeStatusClass("overTime")
+		} else if (time < self.warningTime()) {
+			self.timeStatusClass("warningTime")
+		} else {
+			self.timeStatusClass("normalTime")
+		}
+	}
+
+
+	// decrement timer
+	setInterval(function() { self.updateParsedTime() }, 1000)	
+
+
+
+
+
+
 
 	// assumed to be sorted by scheduledStart
 	var data = [
-			{"id":"a", "scheduledStart":"2016-11-29 09:15:00", "scheduledEnd":"2016-11-29 10:15:00", "actualStart":"2016-11-29 09:15:00", "actualEnd":"2016-11-29 10:15:00", "done":true, "active":false, "name":"lunch", "speaker":""},
-			{"id":"b", "scheduledStart":"2016-11-29 10:15:00", "scheduledEnd":"2016-11-29 11:15:00", "actualStart":"2016-11-29 10:15:00", "actualEnd":"2016-11-29 11:15:00", "done":false, "active":true, "name":"meeting", "speaker":"speaker"},
-			{"id":"c", "scheduledStart":"2016-11-29 11:15:00", "scheduledEnd":"2016-11-29 12:15:00", "actualStart":"2016-11-29 11:15:00", "actualEnd":"2016-11-29 12:15:00", "done":false, "active":false, "name":"another meeting", "speaker":"another speaker"},
-			{"id":"d", "scheduledStart":"2016-11-29 12:15:00", "scheduledEnd":"2016-11-29 13:15:00", "actualStart":"2016-11-29 12:15:00", "actualEnd":"2016-11-29 13:15:00", "done":false, "active":false, "name":"coffee break", "speaker":""},
-			{"id":"e", "scheduledStart":"2016-11-29 13:15:00", "scheduledEnd":"2016-11-29 14:15:00", "actualStart":"2016-11-29 13:15:00", "actualEnd":"2016-11-29 14:15:00", "done":false, "active":false, "name":"networking", "speaker":""},
-			{"id":"f", "scheduledStart":"2016-11-29 14:15:00", "scheduledEnd":"2016-11-29 15:15:00", "actualStart":"2016-11-29 14:15:00", "actualEnd":"2016-11-29 15:15:00", "done":false, "active":false, "name":"yet another meeting", "speaker":"the pope"},
-			{"id":"g", "scheduledStart":"2016-11-29 15:15:00", "scheduledEnd":"2016-11-29 16:15:00", "actualStart":"2016-11-29 15:15:00", "actualEnd":"2016-11-29 16:15:00", "done":false, "active":false, "name":"watching paint dry", "speaker":"Mario the Painter"},
-			{"id":"h", "scheduledStart":"2016-11-29 16:15:00", "scheduledEnd":"2016-11-29 17:15:00", "actualStart":"2016-11-29 16:15:00", "actualEnd":"2016-11-29 17:15:00", "done":false, "active":false, "name":"evaporating into thin air", "speaker":"a water molecule"},
-			{"id":"i", "scheduledStart":"2016-11-29 17:15:00", "scheduledEnd":"2016-11-29 18:15:00", "actualStart":"2016-11-29 17:15:00", "actualEnd":"2016-11-29 18:15:00", "done":false, "active":false, "name":"unicycle practice", "speaker":"a clown car full of clowns"}
+			{"id":"a", "scheduledStart":"2016-11-30 17:17:00", "scheduledEnd":"2016-11-30 17:18:00", "actualStart":"2016-11-30 17:17:00", "actualEnd":"2016-11-30 17:18:00", "done":true, "active":false, "name":"lunch", "speaker":""},
+			{"id":"b", "scheduledStart":"2016-11-30 17:18:00", "scheduledEnd":"2016-11-30 18:19:00", "actualStart":"2016-11-30 17:18:00", "actualEnd":"2016-11-30 18:19:00", "done":false, "active":true, "name":"meeting", "speaker":"speaker"}
+			// {"id":"c", "scheduledStart":"2016-11-30 11:17:00", "scheduledEnd":"2016-11-30 12:17:00", "actualStart":"2016-11-30 11:17:00", "actualEnd":"2016-11-30 12:17:00", "done":false, "active":false, "name":"another meeting", "speaker":"another speaker"},
+			// {"id":"d", "scheduledStart":"2016-11-30 12:17:00", "scheduledEnd":"2016-11-30 13:17:00", "actualStart":"2016-11-30 12:17:00", "actualEnd":"2016-11-30 13:17:00", "done":false, "active":false, "name":"coffee break", "speaker":""},
+			// {"id":"e", "scheduledStart":"2016-11-30 13:17:00", "scheduledEnd":"2016-11-30 14:17:00", "actualStart":"2016-11-30 13:17:00", "actualEnd":"2016-11-30 14:17:00", "done":false, "active":false, "name":"networking", "speaker":""},
+			// {"id":"f", "scheduledStart":"2016-11-30 14:17:00", "scheduledEnd":"2016-11-30 15:17:00", "actualStart":"2016-11-30 14:17:00", "actualEnd":"2016-11-30 15:17:00", "done":false, "active":false, "name":"yet another meeting", "speaker":"the pope"},
+			// {"id":"g", "scheduledStart":"2016-11-30 15:17:00", "scheduledEnd":"2016-11-30 16:17:00", "actualStart":"2016-11-30 15:17:00", "actualEnd":"2016-11-30 16:17:00", "done":false, "active":false, "name":"watching paint dry", "speaker":"Mario the Painter"},
+			// {"id":"h", "scheduledStart":"2016-11-30 16:17:00", "scheduledEnd":"2016-11-30 17:17:00", "actualStart":"2016-11-30 16:17:00", "actualEnd":"2016-11-30 17:17:00", "done":false, "active":false, "name":"evaporating into thin air", "speaker":"a water molecule"},
+			// {"id":"i", "scheduledStart":"2016-11-30 17:17:00", "scheduledEnd":"2016-11-30 18:17:00", "actualStart":"2016-11-30 17:17:00", "actualEnd":"2016-11-30 18:17:00", "done":false, "active":false, "name":"unicycle practice", "speaker":"a clown car full of clowns"}
 		]
 
 	// $.ajax({
@@ -32,6 +78,9 @@ var ViewModel = function() {
 
 	var minTime = moment.min(moment(data[0].scheduledStart), moment(data[0].actualStart))
 	var maxTime = moment.max(moment(data[data.length-1].scheduledEnd), moment(data[data.length-1].actualEnd))
+
+	console.log(minTime.format())
+	console.log(maxTime.format())
 
 	var minHour = minTime.startOf('hour')
 	var maxHour = maxTime.startOf('hour')
@@ -48,47 +97,157 @@ var ViewModel = function() {
 	while (stepTime <= maxHour) {
 		timeOverlayMajor.push({
 			label: stepTime.format('h:mm A'),
-			y: timeScale(stepTime.valueOf()) + '%'
+			y: timeScale(stepTime) + '%'
 		})
 		// half hour
 		stepTime.add(30, 'minutes')
 		timeOverlayMinor.push({
 			label: stepTime.format('h:mm A'),
-			y: timeScale(stepTime.valueOf()) + '%'
+			y: timeScale(stepTime) + '%'
 		})
 		stepTime.add(30, 'minutes')
 	}
 
 
 	data.map(function(d) {
-		d.startTime = moment(d.scheduledStart)
-		d.endTime = moment(d.scheduledEnd)
+		d.scheduledStartTime = moment(d.scheduledStart)
+		d.scheduledEndTime = moment(d.scheduledEnd)
 		d.actualStartTime = moment(d.actualStart)
 		d.actualEndTime = moment(d.actualEnd)
 
-		d.duration = d.actualEndTime.diff(d.actualStartTime)
-		d.yScheduled = timeScale(d.startTime.valueOf())
-		d.heightScheduled = timeScale(d.endTime.valueOf()) - timeScale(d.startTime.valueOf())
-		d.yActual = timeScale(d.actualStartTime.valueOf())
-		d.heightActual = timeScale(d.actualEndTime.valueOf()) - timeScale(d.actualStartTime.valueOf())
+		d.scheduledDuration = d.scheduledEndTime.diff(d.scheduledStartTime)
+		d.actualDuration = d.actualEndTime.diff(d.actualStartTime)
 
-		d.displayNameScheduled = d.name + ' (' + d.endTime.diff(d.startTime, 'minutes') + 'm)'
+		d.yScheduled = timeScale(d.scheduledStartTime)
+		d.heightScheduled = timeScale(d.scheduledEndTime) - timeScale(d.scheduledStartTime)
+		d.yActual = timeScale(d.actualStartTime)
+		d.heightActual = timeScale(d.actualEndTime) - timeScale(d.actualStartTime)
+
+		d.displayNameScheduled = d.name + ' (' + d.scheduledEndTime.diff(d.scheduledStartTime, 'minutes') + 'm)'
 		d.displayNameActual = d.name + ' (' + d.actualEndTime.diff(d.actualStartTime, 'minutes') + 'm)'
 
 	})
 
 
+	var formatDifference = function(diff) {
+		var out = ''
+		if (diff == 0) {
+			out = '--'
+		} else if (diff < 0) {
+			out = diff.slice(1) + 'm early'
+		} else {
+			out = diff + 'm late'
+		}
+		return out
+	}
 
 
-	self.currentEventName = ko.observable('')
-	self.scheduledStart = ko.observable('')
-	self.actualStart = ko.observable('')
-	self.startDifference = ko.observable('')
+	self.currentEvent = ko.observable(data[0])
 
 
+	self.currentEventName = ko.computed(function() { return self.currentEvent().name })
+	self.currentSpeaker = ko.computed(function() { return self.currentEvent().speaker })
+	self.scheduledStart = ko.computed(function() { return self.currentEvent().scheduledStartTime.format('LT') })
+	self.scheduledEnd = ko.computed(function() { return self.currentEvent().scheduledEndTime.format('LT') })
+	self.scheduledDuration = ko.computed(function() { return self.currentEvent().scheduledEndTime.diff(self.currentEvent().scheduledStartTime, 'minutes')})
+	self.actualStart = ko.computed(function() { return self.currentEvent().actualStartTime.format('LT') })
+	self.actualEnd = ko.computed(function() { return self.currentEvent().actualEndTime.format('LT') })
+	self.actualDuration = ko.computed(function() { return self.currentEvent().actualEndTime.diff(self.currentEvent().actualStartTime, 'minutes')})
+	self.differenceStart = ko.computed(function() {	return formatDifference(self.currentEvent().actualStartTime.diff(self.currentEvent().scheduledStartTime, 'minutes')) })
+	self.differenceEnd = ko.computed(function() { return formatDifference(self.currentEvent().actualEndTime.diff(self.currentEvent().scheduledEndTime, 'minutes')) })
+	self.differenceDuration = ko.computed(function() {
+		var diff = self.actualDuration() - self.scheduledDuration()
+		return diff==0 ? '--' : diff+'m'
+	})
 
 
+	var updateTimelineDisplay = function() {
+		// go through all the events and update the timeline display here
+		d3.selectAll('.event#actualEvent').transition()
+			.duration(1000)
+			.attr('y', function(d) { return d.yActual+'%' })
+			.attr('height', function(d) { return d.heightActual+'%' })
 
+		d3.selectAll('.eventText#actualEvent').transition()
+			.duration(1000)
+			.attr('y', function(d) { return d.yActual+1+'%' })
+
+		d3.selectAll('.speakerText#actualEvent').transition()
+			.duration(1000)
+			.attr('y', function(d) { return d.yActual+3.5+'%' })
+	}
+
+
+	var updateTimings = function() {
+		// go through all the events and update their timings and durations here
+		var previousEndTime = moment(0)
+		for (var i=0; i<data.length; i++) {
+			e = data[i]
+			// see if we have to shift the event forwards
+			var diff = previousEndTime.diff(e.actualStartTime)
+			if (diff > 0) {
+				e.actualStartTime.add(diff)
+				e.actualStart = e.actualStartTime.format('YYYY-MM-DD HH:MM:SS')
+				e.actualEndTime.add(diff)
+				e.actualEnd = e.actualEndTime.format('YYYY-MM-DD HH:MM:SS')
+
+				e.yActual = timeScale(e.actualStartTime)
+
+			}
+			previousEndTime = e.actualEndTime
+		}
+		updateTimelineDisplay()
+	}
+
+
+	self.startEvent = function() {
+		self.active(true)
+		e = self.currentEvent()
+		e.active = true
+		e.actualStartTime = moment()
+		e.actualStart = e.actualStartTime.format('YYYY-MM-DD HH:MM:SS')
+		e.actualEndTime = moment().add(e.actualDuration)
+		e.actualEnd = e.actualEndTime.format('YYYY-MM-DD HH:MM:SS')
+
+		e.yActual = timeScale(e.actualStartTime)
+
+		self.supposedToEnd = e.actualEndTime
+		self.updateParsedTime()
+		self.currentEvent(e)
+		for (var i=0; i<data.length; i++) {
+			if (data[i].id == e.id) {
+				data[i] = e
+			}
+		}
+
+		updateTimings()
+	}
+
+
+	var updateRunning = function() {
+		console.log(self.currentEvent().actualEndTime.format())
+		// update current time line
+		d3.select('.currentTimeLine').transition()
+			.duration(100)
+			.attr('y1', timeScale(moment())+'%')
+			.attr('y2', timeScale(moment())+'%')
+
+		// if we're running over time, update the actual end time of the current event and propogate the changes
+		e = self.currentEvent()
+		if (self.active() && e.actualEndTime.diff(moment())<0) {
+			e.actualEndTime = moment()
+			e.actualEnd = e.actualEndTime.format('YYYY-MM-DD HH:MM:SS')
+
+			e.actualDuration = e.actualEndTime.diff(e.actualStartTime)
+
+			e.heightActual = timeScale(e.actualEndTime) - timeScale(e.actualStartTime)
+
+			e.displayNameActual = e.name + ' (' + e.actualEndTime.diff(e.actualStartTime, 'minutes') + 'm)'
+
+			self.currentEvent.valueHasMutated()
+			updateTimings()
+		}
+	}
 
 
 	var render = function() {
@@ -149,6 +308,7 @@ var ViewModel = function() {
 
 		// right
 		events.append('rect')
+				.attr('id', 'actualEvent')
 				.attr('class', 'event')
 				.attr('fill', function(d) { return color(d.name) })
 				.attr('x', LofR+1+'%')
@@ -157,16 +317,18 @@ var ViewModel = function() {
 				.attr('height', function(d) { return d.heightActual+'%' })
 
 		events.append('text')
+				.attr('id', 'actualEvent')
 				.attr('class', 'eventText')
 				.text(function(d) { return d.displayNameActual })
 				.attr('x', LofR+2+'%')
 				.attr('y', function(d) { return d.yActual+1+'%' })
 
 		events.append('text')
+				.attr('id', 'actualEvent')
 				.attr('class', 'speakerText')
 				.text(function(d) { return d.speaker })
 				.attr('x', LofR+2+'%')
-				.attr('y', function(d) { return d.yScheduled+3.5+'%' })
+				.attr('y', function(d) { return d.yActual+3.5+'%' })
 
 
 
@@ -233,14 +395,7 @@ var ViewModel = function() {
 
 	render()
 
-	var updateCurrentTimeLine = function() {
-		d3.select('.currentTimeLine').transition()
-			.duration(100)
-			.attr('y1', timeScale(moment())+'%')
-			.attr('y2', timeScale(moment())+'%')
-	}
-
-	setInterval(updateCurrentTimeLine, 10000)
+	setInterval(updateRunning, 10000)
 }
 
 ko.applyBindings(new ViewModel());
