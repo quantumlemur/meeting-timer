@@ -8,6 +8,9 @@ var ViewModel = function() {
 
 	self.warningTime = ko.observable(120) // seconds
 
+	self.controlAutoStart = ko.observable(false)
+	self.controlMoveEventsUp = ko.observable(true)
+
 	self.active = ko.observable(false)
 	self.flash = ko.observable(true)
 
@@ -55,8 +58,8 @@ var ViewModel = function() {
 
 	// assumed to be sorted by scheduledStart
 	var data = [
-			{"id":"a", "scheduledStart":"2016-11-30 17:17:00", "scheduledEnd":"2016-11-30 17:18:00", "actualStart":"2016-11-30 17:17:00", "actualEnd":"2016-11-30 17:18:00", "done":true, "active":false, "name":"lunch", "speaker":""},
-			{"id":"b", "scheduledStart":"2016-11-30 17:18:00", "scheduledEnd":"2016-11-30 18:19:00", "actualStart":"2016-11-30 17:18:00", "actualEnd":"2016-11-30 18:19:00", "done":false, "active":true, "name":"meeting", "speaker":"speaker"}
+			// {"id":"a", "scheduledStart":"2016-11-30 17:17:00", "scheduledEnd":"2016-11-30 17:18:00", "actualStart":"2016-11-30 17:17:00", "actualEnd":"2016-11-30 17:18:00", "done":true, "active":false, "name":"lunch", "speaker":""},
+			// {"id":"b", "scheduledStart":"2016-11-30 17:18:00", "scheduledEnd":"2016-11-30 18:19:00", "actualStart":"2016-11-30 17:18:00", "actualEnd":"2016-11-30 18:19:00", "done":false, "active":true, "name":"meeting", "speaker":"speaker"}
 			// {"id":"c", "scheduledStart":"2016-11-30 11:17:00", "scheduledEnd":"2016-11-30 12:17:00", "actualStart":"2016-11-30 11:17:00", "actualEnd":"2016-11-30 12:17:00", "done":false, "active":false, "name":"another meeting", "speaker":"another speaker"},
 			// {"id":"d", "scheduledStart":"2016-11-30 12:17:00", "scheduledEnd":"2016-11-30 13:17:00", "actualStart":"2016-11-30 12:17:00", "actualEnd":"2016-11-30 13:17:00", "done":false, "active":false, "name":"coffee break", "speaker":""},
 			// {"id":"e", "scheduledStart":"2016-11-30 13:17:00", "scheduledEnd":"2016-11-30 14:17:00", "actualStart":"2016-11-30 13:17:00", "actualEnd":"2016-11-30 14:17:00", "done":false, "active":false, "name":"networking", "speaker":""},
@@ -65,6 +68,26 @@ var ViewModel = function() {
 			// {"id":"h", "scheduledStart":"2016-11-30 16:17:00", "scheduledEnd":"2016-11-30 17:17:00", "actualStart":"2016-11-30 16:17:00", "actualEnd":"2016-11-30 17:17:00", "done":false, "active":false, "name":"evaporating into thin air", "speaker":"a water molecule"},
 			// {"id":"i", "scheduledStart":"2016-11-30 17:17:00", "scheduledEnd":"2016-11-30 18:17:00", "actualStart":"2016-11-30 17:17:00", "actualEnd":"2016-11-30 18:17:00", "done":false, "active":false, "name":"unicycle practice", "speaker":"a clown car full of clowns"}
 		]
+
+	var tstart = moment().subtract(1, 'minutes')
+	var tnumEvents = 5
+	var tlenEvents = 20
+	for (var i=0; i<tnumEvents; i++) {
+		var a = {}
+
+		a.id = Math.floor(Math.random()*99999)
+		a.scheduledStart = tstart.toISOString()
+		a.actualStart = tstart.toISOString()
+		a.scheduledEnd = tstart.add(tlenEvents, 'minutes').toISOString()
+		a.actualEnd = tstart.toISOString()
+		a.done = false
+		a.active = false
+		a.name = a.id
+		a.speaker = a.name
+
+		data.push(a)
+	}
+
 
 	// $.ajax({
 	// 	url: 'api.html',
@@ -79,11 +102,8 @@ var ViewModel = function() {
 	var minTime = moment.min(moment(data[0].scheduledStart), moment(data[0].actualStart))
 	var maxTime = moment.max(moment(data[data.length-1].scheduledEnd), moment(data[data.length-1].actualEnd))
 
-	console.log(minTime.format())
-	console.log(maxTime.format())
-
 	var minHour = minTime.startOf('hour')
-	var maxHour = maxTime.startOf('hour')
+	var maxHour = maxTime.startOf('hour').add(1, 'hour')
 
 	var timeScale = d3.scale.linear()
 		.domain([minTime.valueOf(), maxTime.valueOf()])
@@ -134,7 +154,8 @@ var ViewModel = function() {
 		if (diff == 0) {
 			out = '--'
 		} else if (diff < 0) {
-			out = diff.slice(1) + 'm early'
+			out = diff + 'm early'
+			out = out.slice(1)
 		} else {
 			out = diff + 'm late'
 		}
@@ -180,12 +201,12 @@ var ViewModel = function() {
 
 	var updateTimings = function() {
 		// go through all the events and update their timings and durations here
-		var previousEndTime = moment(0)
+		var previousEndTime = data[0].actualStartTime
 		for (var i=0; i<data.length; i++) {
 			e = data[i]
 			// see if we have to shift the event forwards
 			var diff = previousEndTime.diff(e.actualStartTime)
-			if (diff > 0) {
+			if (diff > 0 || (diff<0 && self.controlMoveEventsUp())) {
 				e.actualStartTime.add(diff)
 				e.actualStart = e.actualStartTime.format('YYYY-MM-DD HH:MM:SS')
 				e.actualEndTime.add(diff)
@@ -202,6 +223,10 @@ var ViewModel = function() {
 
 	self.startEvent = function() {
 		self.active(true)
+		if ($('#endButton').attr('disabled')=='disabled') {
+			$('#endButton').removeAttr('disabled')
+		}
+
 		e = self.currentEvent()
 		e.active = true
 		e.actualStartTime = moment()
@@ -221,11 +246,57 @@ var ViewModel = function() {
 		}
 
 		updateTimings()
+
+		console.log(data)
+	}
+
+
+	self.endEvent = function() {
+		if (self.active()) {
+			self.active(false)
+			$('#endButton').attr('disabled', 'disabled')
+
+			e = self.currentEvent()
+			e.active = false
+			e.actualEndTime = moment()
+			e.actualEnd = e.actualEndTime.format('YYYY-MM-DD HH:MM:SS')
+			console.log(e.actualDuration)
+			e.actualDuration = e.actualEndTime.diff(e.actualStartTime)
+			console.log('asdasd')
+			console.log(e.actualDuration)
+			e.heightActual = timeScale(e.actualEndTime) - timeScale(e.actualStartTime)
+
+			self.supposedToEnd = e.actualEndTime
+			self.updateParsedTime()
+			self.currentEvent(e)
+			for (var i=0; i<data.length; i++) {
+				if (data[i].id == e.id) {
+					data[i] = e
+					if (i+1<data.length) {
+						self.currentEvent(data[i+1])
+					}
+				}
+			}
+
+			updateTimings()
+
+			if (self.controlAutoStart()) {
+				self.startEvent()
+			}
+		}
+	}
+
+	self.controlSetAutoStart = function() {
+		self.controlAutoStart(!self.controlAutoStart())
+	}
+
+	self.controlSetMoveEventsUp = function() {
+		self.controlMoveEventsUp(!self.controlMoveEventsUp())
 	}
 
 
 	var updateRunning = function() {
-		console.log(self.currentEvent().actualEndTime.format())
+		// console.log(self.currentEvent().actualEndTime.format())
 		// update current time line
 		d3.select('.currentTimeLine').transition()
 			.duration(100)
@@ -244,6 +315,17 @@ var ViewModel = function() {
 
 			e.displayNameActual = e.name + ' (' + e.actualEndTime.diff(e.actualStartTime, 'minutes') + 'm)'
 
+			self.currentEvent.valueHasMutated()
+			updateTimings()
+		}
+
+		// if we aren't running an event and it hasn't started, move everything back
+		e = self.currentEvent()
+		if (!self.active() && e.actualStartTime.diff(moment())<0) {
+			diff = e.actualStartTime.diff(moment())
+			e.actualEndTime.add(diff)
+			e.actualStartTime = moment()
+			e.yActual = timeScale(e.actualStartTime)
 			self.currentEvent.valueHasMutated()
 			updateTimings()
 		}

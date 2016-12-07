@@ -11,7 +11,7 @@
 <body>
 	<div class=schedulePane>
 		<div class=scheduleHeader>
-			<div class="scheduleHeaderText left h1">Scheduled Timeline</div>
+			<div class="scheduleHeaderText left h1">Scheduled</div>
 			<div class="scheduleHeaderText right h1">Actual Timeline</div>
 		</div>
 		<div class="timelineDiv"></div>
@@ -57,7 +57,7 @@
 		</div>
 		<div class="buttonPane">
 			<p>
-				<button id="endButton" type="button" class="btn btn-lg btn-block" disabled="disabled">End current event</button>
+				<button id="endButton" type="button" class="btn btn-lg btn-block" disabled="disabled" data-bind="click: endEvent">End current event</button>
 			</p>
 			<p>
 				<button id="startButton" type="button" class="btn btn-lg btn-block" data-bind="click: startEvent">Start event</button>
@@ -65,7 +65,10 @@
 			<hr>
 			<h1>Controls</h1>
 			<p>
-				<button type="button" class="btn btn-primary btn-lg btn-block active">Automatically start next event</button>
+				<button type="button" class="btn btn-lg btn-block active" data-bind="css: { 'btn-primary': controlAutoStart }, click:controlSetAutoStart">Automatically start next event</button>
+			</p>
+			<p>
+				<button type="button" class="btn btn-lg btn-block active" data-bind="css: { 'btn-primary': controlMoveEventsUp }, click:controlSetMoveEventsUp">Move events up when one ends early</button>
 			</p>
 			<p>
 				<div class="half left">
