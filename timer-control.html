@@ -65,25 +65,25 @@
 			<hr>
 			<h1>Controls</h1>
 			<p>
-				<button type="button" class="btn btn-lg btn-block active" data-bind="css: { 'btn-primary': controlAutoStart }, click:controlSetAutoStart">Automatically start next event</button>
+				<button type="button" class="btn btn-lg btn-block" data-bind="css: { 'btn-primary active': controlAutoStart }, click:controlSetAutoStart">Automatically start next event</button>
 			</p>
 			<p>
-				<button type="button" class="btn btn-lg btn-block active" data-bind="css: { 'btn-primary': controlMoveEventsUp }, click:controlSetMoveEventsUp">Move events up when one ends early</button>
+				<button type="button" class="btn btn-lg btn-block" data-bind="css: { 'btn-primary active': controlMoveEventsUp }, click:controlSetMoveEventsUp">Move events up when one ends early</button>
 			</p>
-			<p>
+<!-- 			<p>
 				<div class="half left">
 					<button type="button" class="btn btn-primary btn-lg btn-block active col-md-6;">Make up slippage with gaps</button>
 				</div>
 				<div class="half right">
 					<button type="button" class="btn btn-default btn-lg btn-block col-md-6">Maintain gaps</button>
 				</div>
-			</p>
+			</p> -->
 			<p>
 				<div class="half left">
-					<button type="button" class="btn btn-primary btn-lg btn-block active col-md-6;">Flexible ending time</button>
+					<button type="button" class="btn btn-lg btn-block col-md-6;" data-bind="css: { 'btn-primary active': !controlMaintainDayEnd() }, click:controlSetMaintainDayEnd">Maintain event durations</button>
 				</div>
 				<div class="half right">
-					<button type="button" class="btn btn-default btn-lg btn-block col-md-6">Maintain ending time</button>
+					<button type="button" class="btn btn-lg btn-block col-md-6" data-bind="css: {'btn-primary active': controlMaintainDayEnd }, click:controlSetMaintainDayEnd">Maintain ending time</button>
 				</div>
 			</p>
 		</div>

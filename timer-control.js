@@ -10,6 +10,7 @@ var ViewModel = function() {
 
 	self.controlAutoStart = ko.observable(false)
 	self.controlMoveEventsUp = ko.observable(true)
+	self.controlMaintainDayEnd = ko.observable(false)
 
 	self.active = ko.observable(false)
 	self.flash = ko.observable(true)
@@ -70,7 +71,7 @@ var ViewModel = function() {
 		]
 
 	var tstart = moment().subtract(1, 'minutes')
-	var tnumEvents = 5
+	var tnumEvents = 2
 	var tlenEvents = 20
 	for (var i=0; i<tnumEvents; i++) {
 		var a = {}
@@ -200,24 +201,44 @@ var ViewModel = function() {
 
 
 	var updateTimings = function() {
+		console.log('=======================')
 		// go through all the events and update their timings and durations here
-		var previousEndTime = data[0].actualStartTime
 		for (var i=0; i<data.length; i++) {
 			e = data[i]
-			// see if we have to shift the event forwards
-			var diff = previousEndTime.diff(e.actualStartTime)
-			if (diff > 0 || (diff<0 && self.controlMoveEventsUp())) {
-				e.actualStartTime.add(diff)
-				e.actualStart = e.actualStartTime.format('YYYY-MM-DD HH:MM:SS')
+			// see if there's overlap between events
+			var diff = 0
+			if (i>0) {
+				diff = data[i-1].actualEndTime.diff(e.actualStartTime)
+				console.log(i, diff)
+			}
+			if (diff > 0) {
+
+				if (self.controlMaintainDayEnd()) {
+					// if we want to maintain the day ending time, then shorten the event the correct proportional amount
+					var dayEndTime = data[data.length-1].scheduledEndTime
+					var remainingDayTime = dayEndTime.diff(e.actualStartTime)
+					var timeProportion = e.actualDuration / remainingDayTime
+					var endShift = diff*timeProportion
+					e.actualEndTime.subtract(endShift)
+					e.actualEnd = e.actualEndTime.format('YYYY-MM-DD HH:MM:SS')
+
+					e.heightActual = timeScale(e.actualEndTime) - timeScale(e.actualStartTime)
+					e.displayNameActual = e.name + ' (' + e.actualEndTime.diff(e.actualStartTime, 'minutes') + 'm)'
+				} 
+				// if we aren't maintaining the day ending time, then just shift the ending back to maintain the event duration
 				e.actualEndTime.add(diff)
 				e.actualEnd = e.actualEndTime.format('YYYY-MM-DD HH:MM:SS')
+				// shift the event start back to remove the overlap
+				e.actualStartTime.add(diff)
+				e.actualStart = e.actualStartTime.format('YYYY-MM-DD HH:MM:SS')
 
 				e.yActual = timeScale(e.actualStartTime)
-
 			}
-			previousEndTime = e.actualEndTime
 		}
 		updateTimelineDisplay()
+		for (var i=0; i<data.length; i++) {
+			console.log(data[i].actualStartTime.format('LT'), "     ", data[i].actualEndTime.format('LT'))
+		}
 	}
 
 
@@ -294,6 +315,10 @@ var ViewModel = function() {
 		self.controlMoveEventsUp(!self.controlMoveEventsUp())
 	}
 
+	self.controlSetMaintainDayEnd = function() {
+		self.controlMaintainDayEnd(!self.controlMaintainDayEnd())
+	}
+
 
 	var updateRunning = function() {
 		// console.log(self.currentEvent().actualEndTime.format())
@@ -319,10 +344,10 @@ var ViewModel = function() {
 			updateTimings()
 		}
 
-		// if we aren't running an event and it hasn't started, move everything back
+		// if we aren't running an event and it hasn't started, move it back
 		e = self.currentEvent()
 		if (!self.active() && e.actualStartTime.diff(moment())<0) {
-			diff = e.actualStartTime.diff(moment())
+			var diff = moment().diff(e.actualStartTime)
 			e.actualEndTime.add(diff)
 			e.actualStartTime = moment()
 			e.yActual = timeScale(e.actualStartTime)
