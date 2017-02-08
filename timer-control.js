@@ -9,7 +9,7 @@ var ViewModel = function() {
 	self.warningTime = ko.observable(120) // seconds
 
 	self.controlAutoStart = ko.observable(false)
-	self.controlMoveEventsUp = ko.observable(true)
+	// self.controlMoveEventsUp = ko.observable(true)
 	self.controlMaintainDayEnd = ko.observable(false)
 
 	self.active = ko.observable(false)
@@ -71,7 +71,7 @@ var ViewModel = function() {
 		]
 
 	var tstart = moment().subtract(1, 'minutes')
-	var tnumEvents = 2
+	var tnumEvents = 3
 	var tlenEvents = 20
 	for (var i=0; i<tnumEvents; i++) {
 		var a = {}
@@ -211,6 +211,21 @@ var ViewModel = function() {
 				diff = data[i-1].actualEndTime.diff(e.actualStartTime)
 				console.log(i, diff)
 			}
+
+			if (diff < 0) {
+				// if we have an open gap
+				var endDiff = data[data.length-1].scheduledEndTime.diff(data[data.length-1].actualEndTime)
+				if (endDiff < 0) {
+					// and we're running behind schedule
+					// then move the event up to fill in the gap
+					console.log('running behind', diff/1000/60, endDiff/1000/60)
+					e.actualStartTime.add(Math.max(diff, endDiff))
+					e.actualStart = e.actualStartTime.format('YYYY-MM-DD HH:MM:SS')
+					e.actualEndTime.add(Math.max(diff, endDiff))
+					e.actualEnd = e.actualEndTime.format('YYYY-MM-DD HH:MM:SS')
+					e.yActual = timeScale(e.actualStartTime)
+				}
+			}
 			if (diff > 0) {
 
 				if (self.controlMaintainDayEnd()) {
@@ -311,9 +326,9 @@ var ViewModel = function() {
 		self.controlAutoStart(!self.controlAutoStart())
 	}
 
-	self.controlSetMoveEventsUp = function() {
-		self.controlMoveEventsUp(!self.controlMoveEventsUp())
-	}
+	// self.controlSetMoveEventsUp = function() {
+	// 	self.controlMoveEventsUp(!self.controlMoveEventsUp())
+	// }
 
 	self.controlSetMaintainDayEnd = function() {
 		self.controlMaintainDayEnd(!self.controlMaintainDayEnd())
@@ -322,13 +337,13 @@ var ViewModel = function() {
 
 	var updateRunning = function() {
 		// console.log(self.currentEvent().actualEndTime.format())
-		// update current time line
+		// update current time line and the current event
 		d3.select('.currentTimeLine').transition()
 			.duration(100)
 			.attr('y1', timeScale(moment())+'%')
 			.attr('y2', timeScale(moment())+'%')
 
-		// if we're running over time, update the actual end time of the current event and propogate the changes
+		// if we're running over time, update the actual end time of the current event
 		e = self.currentEvent()
 		if (self.active() && e.actualEndTime.diff(moment())<0) {
 			e.actualEndTime = moment()
@@ -437,6 +452,20 @@ var ViewModel = function() {
 				.attr('x', LofR+2+'%')
 				.attr('y', function(d) { return d.yActual+3.5+'%' })
 
+
+		var genPath = function(d) {
+			var path = d3.path()
+			path.moveTo(d.RofL-2+'%', d.yScheduled+'%')
+			path.lineTo(d.LofR+2+'%', d.yActual+'%')
+			path.lineTo(d.LofR+2+'%', d.yActual+d.heightActual+'%')
+			path.lineTo(d.RofL-2+'%', d.yScheduled+d.heightScheduled+'%')
+			path.closePath()
+			return path.toString()
+		}
+
+		events.append('path')
+				.attr('d', genPath )
+				.attr('fill', 'pink')
 
 
 

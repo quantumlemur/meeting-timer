@@ -28,13 +28,21 @@
 	"buffers":
 	[
 		{
-			"contents": "ViewModel = function()\nself.updateParsedTime = function()\nformatDifference = function(diff)\nupdateTimelineDisplay = function()\nupdateTimings = function()\nself.startEvent = function()\nself.endEvent = function()\nself.controlSetAutoStart = function()\nself.controlSetMoveEventsUp = function()\nself.controlSetMaintainDayEnd = function()\nupdateRunning = function()\nrender = function()\ngenPath = function(d)",
+			"file": "test.css",
 			"settings":
 			{
-				"buffer_size": 400,
-				"line_ending": "Windows",
-				"name": "𝌆 Outline",
-				"scratch": true
+				"buffer_size": 236,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test.html",
+			"settings":
+			{
+				"buffer_size": 730,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -46,12 +54,38 @@
 			}
 		},
 		{
-			"contents": "Keir Gonyea\n\t626-429-6369\n\t1st half of Spring 2017\n\n\nGrant Rossman\n\t(858)-231-8686\n\tgrant.rossman@gatech.edu\n\t1st half?\n\tBraun says he needs 2/3 of a semester\n\nKip (Kenneth) Hart\n\t410-598-1378\n\tAlready has $2600/mo through Prof Braun?\n\tfull GRA?\n\nLin Li\n\tfull GRA?",
+			"file": "test.js",
 			"settings":
 			{
-				"buffer_size": 264,
-				"line_ending": "Windows",
-				"name": "Keir Gonyea"
+				"buffer_size": 5382,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "newtest.html",
+			"settings":
+			{
+				"buffer_size": 3171,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/D/Dropbox/Documents/Classes/Past classes/MGT 6203 - Data Analytics/project/getdata.py",
+			"settings":
+			{
+				"buffer_size": 2047,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "data.tsv",
+			"settings":
+			{
+				"buffer_size": 250,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -165,10 +199,14 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 260.0,
-		"last_filter": "",
+		"height": 185.0,
+		"last_filter": "remove",
 		"selected_items":
 		[
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
 			[
 				"ou",
 				"Browse Mode: Outline (Right)"
@@ -301,6 +339,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"random",
 			"console.log",
 			"asdasd",
 			":15:",
@@ -427,8 +466,7 @@
 			"nfhigher",
 			"nfresearch",
 			"nfgraduate",
-			"nfscholarships",
-			"nfstipends"
+			"nfscholarships"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -455,114 +493,79 @@
 			[
 				{
 					"buffer": 0,
+					"file": "test.css",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 400,
+						"buffer_size": 236,
 						"regions":
 						{
 						},
 						"selection":
 						[
+							[
+								203,
+								203
+							]
 						],
 						"settings":
 						{
-							"current_file": "D:\\Dropbox\\Documents\\Projects\\meeting-timer\\timer-control.js",
-							"default_dir": "D:\\Dropbox\\Documents\\Projects\\meeting-timer",
 							"origPos":
 							[
 								0.0,
 								0.0
 							],
-							"outline_rename_mode": false,
-							"symkeys":
-							[
-								[
-									4,
-									26
-								],
-								[
-									500,
-									534
-								],
-								[
-									5867,
-									5900
-								],
-								[
-									7508,
-									7542
-								],
-								[
-									8066,
-									8092
-								],
-								[
-									9705,
-									9733
-								],
-								[
-									10382,
-									10408
-								],
-								[
-									11226,
-									11263
-								],
-								[
-									11321,
-									11361
-								],
-								[
-									11425,
-									11467
-								],
-								[
-									11540,
-									11566
-								],
-								[
-									12778,
-									12797
-								],
-								[
-									15021,
-									15042
-								]
-							],
-							"symlist":
-							[
-								"ViewModel = function()",
-								"self.updateParsedTime = function()",
-								"formatDifference = function(diff)",
-								"updateTimelineDisplay = function()",
-								"updateTimings = function()",
-								"self.startEvent = function()",
-								"self.endEvent = function()",
-								"self.controlSetAutoStart = function()",
-								"self.controlSetMoveEventsUp = function()",
-								"self.controlSetMaintainDayEnd = function()",
-								"updateRunning = function()",
-								"render = function()",
-								"genPath = function(d)"
-							],
-							"syntax": "Packages/Outline/outline.hidden-tmLanguage"
+							"syntax": "Packages/CSS/CSS.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "test.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 730,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								652,
+								652
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
-					"buffer": 1,
+					"buffer": 2,
 					"file": "timer-control.js",
 					"semi_transient": false,
 					"settings":
@@ -574,8 +577,43 @@
 						"selection":
 						[
 							[
-								547,
-								547
+								13576,
+								13575
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								5062.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5062.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "test.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5382,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								332,
+								332
 							]
 						],
 						"settings":
@@ -585,7 +623,6 @@
 								0.0,
 								0.0
 							],
-							"syncScroll": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
@@ -593,37 +630,105 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 4,
+					"file": "newtest.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 264,
+						"buffer_size": 3171,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								264,
-								264
+								2402,
+								2402
 							]
 						],
 						"settings":
 						{
-							"auto_name": "Keir Gonyea",
-							"default_dir": "D:\\Dropbox\\Documents\\Projects\\meeting-timer",
+							"origPos":
+							[
+								0.0,
+								1107.0
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1107.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/D/Dropbox/Documents/Classes/Past classes/MGT 6203 - Data Analytics/project/getdata.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2047,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1855,
+								1855
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								428.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "data.tsv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								250,
+								250
+							]
+						],
+						"settings":
+						{
 							"origPos":
 							[
 								0.0,
 								0.0
 							],
-							"syncScroll": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -633,7 +738,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 7,
 					"file": "index.html",
 					"semi_transient": false,
 					"settings":
@@ -646,7 +751,7 @@
 						[
 							[
 								503,
-								375
+								503
 							]
 						],
 						"settings":
@@ -663,11 +768,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 10,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 8,
 					"file": "qunit.html",
 					"semi_transient": false,
 					"settings":
@@ -699,11 +804,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 9,
 					"file": ".travis.yml",
 					"semi_transient": false,
 					"settings":
@@ -734,11 +839,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 10,
 					"file": "gulpfile.js",
 					"semi_transient": false,
 					"settings":
@@ -769,11 +874,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 13,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 11,
 					"file": "package.json",
 					"semi_transient": false,
 					"settings":
@@ -805,11 +910,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 11,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 12,
 					"file": "tests.js",
 					"semi_transient": false,
 					"settings":
@@ -840,11 +945,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 13,
 					"file": "theme.css",
 					"semi_transient": false,
 					"settings":
@@ -856,8 +961,8 @@
 						"selection":
 						[
 							[
-								2243,
-								2243
+								2142,
+								2142
 							]
 						],
 						"settings":
@@ -865,21 +970,21 @@
 							"origPos":
 							[
 								0.0,
-								1905.0
+								1821.0
 							],
 							"syncScroll": false,
 							"syntax": "Packages/CSS/CSS.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1905.0,
+						"translation.y": 1821.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 14,
 					"file": "timer-control.html",
 					"semi_transient": false,
 					"settings":
@@ -891,8 +996,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								1458,
+								1458
 							]
 						],
 						"settings":
@@ -900,7 +1005,7 @@
 							"origPos":
 							[
 								0.0,
-								0.0
+								420.0
 							],
 							"syncScroll": false,
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
@@ -911,11 +1016,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 15,
 					"file": "timer.js",
 					"semi_transient": false,
 					"settings":
@@ -927,8 +1032,8 @@
 						"selection":
 						[
 							[
-								1522,
-								1522
+								935,
+								935
 							]
 						],
 						"settings":
@@ -943,10 +1048,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 84.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 9,
 					"type": "text"
 				}
 			]
@@ -981,7 +1086,7 @@
 		[
 			0.0,
 			0.2,
-			0.8,
+			0.559931895573,
 			1.0
 		],
 		"rows":
