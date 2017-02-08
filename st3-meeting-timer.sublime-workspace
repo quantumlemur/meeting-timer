@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"border",
+				"border-width"
+			],
+			[
 				"display",
 				"displayNameScheduled"
 			],
@@ -28,19 +32,10 @@
 	"buffers":
 	[
 		{
-			"file": "test.css",
+			"file": "timer-control.html",
 			"settings":
 			{
-				"buffer_size": 236,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test.html",
-			"settings":
-			{
-				"buffer_size": 730,
+				"buffer_size": 3501,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -49,100 +44,17 @@
 			"file": "timer-control.js",
 			"settings":
 			{
-				"buffer_size": 16983,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test.js",
-			"settings":
-			{
-				"buffer_size": 5382,
+				"buffer_size": 17610,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "newtest.html",
+			"file": "meetingtimer/.gitignore",
 			"settings":
 			{
-				"buffer_size": 3171,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/Dropbox/Documents/Classes/Past classes/MGT 6203 - Data Analytics/project/getdata.py",
-			"settings":
-			{
-				"buffer_size": 2047,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "data.tsv",
-			"settings":
-			{
-				"buffer_size": 250,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 556,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "qunit.html",
-			"settings":
-			{
-				"buffer_size": 739,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": ".travis.yml",
-			"settings":
-			{
-				"buffer_size": 36,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "language: node_js"
-			}
-		},
-		{
-			"file": "gulpfile.js",
-			"settings":
-			{
-				"buffer_size": 161,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "var gulp = require('gulp'),"
-			}
-		},
-		{
-			"file": "package.json",
-			"settings":
-			{
-				"buffer_size": 289,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "{"
-			}
-		},
-		{
-			"file": "tests.js",
-			"settings":
-			{
-				"buffer_size": 86,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "QUnit.test( \"hello test\", function( assert ) {"
+				"buffer_size": 28,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -151,14 +63,6 @@
 			{
 				"buffer_size": 2326,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "timer-control.html",
-			"settings":
-			{
-				"buffer_size": 3492,
 				"line_ending": "Windows"
 			}
 		},
@@ -256,6 +160,22 @@
 	],
 	"file_history":
 	[
+		"/D/Dropbox/Documents/Projects/meeting-timer/test.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/flextest.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/test.css",
+		"/D/Dropbox/Documents/Projects/meeting-timer/flextest.css",
+		"/D/Dropbox/Documents/Projects/meeting-timer/tests.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/package.json",
+		"/D/Dropbox/Documents/Projects/meeting-timer/gulpfile.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/index.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/data.tsv",
+		"/D/Dropbox/Documents/Projects/meeting-timer/newtest.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/test.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/flextest.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/renderingtest.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/qunit.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/.travis.yml",
+		"/D/Dropbox/Documents/Classes/Past classes/MGT 6203 - Data Analytics/project/getdata.py",
 		"/D/Dropbox/Documents/Projects/meeting-timer/st3-meeting-timer.sublime-project",
 		"/D/Dropbox/Documents/Projects/meeting-timer/st3-meeting-timer.sublime-workspace",
 		"/C/Users/mr234/Downloads/nasa.png",
@@ -339,6 +259,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"min",
+			"Start",
+			"currentEvent",
+			"controlmove",
+			"<",
+			"stroke-",
+			"\"widget",
+			"widget",
+			"auto",
+			"horizontal",
+			"flex-grow",
+			"container",
+			"widget",
 			"random",
 			"console.log",
 			"asdasd",
@@ -453,20 +386,7 @@
 			"reports",
 			"select",
 			"sekect",
-			"css",
-			"jquer",
-			"proposalassignednumber",
-			"click: $root.goToProposal, ",
-			"data-bind=\"",
-			"nf",
-			"nfindirect",
-			"nfother",
-			"nfinformal",
-			"nfprecollege",
-			"nfhigher",
-			"nfresearch",
-			"nfgraduate",
-			"nfscholarships"
+			"css"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -474,6 +394,7 @@
 		"regex": true,
 		"replace_history":
 		[
+			"\n<",
 			"\"",
 			"=",
 			"'TC-46'",
@@ -493,19 +414,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "test.css",
+					"file": "timer-control.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 236,
+						"buffer_size": 3501,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								203,
-								203
+								2617,
+								2411
 							]
 						],
 						"settings":
@@ -513,72 +434,41 @@
 							"origPos":
 							[
 								0.0,
-								0.0
+								588.0
 							],
-							"syntax": "Packages/CSS/CSS.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "test.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 730,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								652,
-								652
-							]
-						],
-						"settings":
-						{
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
+							"syncScroll": false,
 							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 588.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
-					"buffer": 2,
+					"buffer": 1,
 					"file": "timer-control.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16983,
+						"buffer_size": 17610,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								13576,
-								13575
+								4471,
+								4471
 							]
 						],
 						"settings":
@@ -586,139 +476,34 @@
 							"origPos":
 							[
 								0.0,
-								5062.0
+								1408.0
 							],
 							"syncScroll": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5062.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "test.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5382,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								332,
-								332
-							]
-						],
-						"settings":
-						{
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "newtest.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3171,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2402,
-								2402
-							]
-						],
-						"settings":
-						{
-							"origPos":
-							[
-								0.0,
-								1107.0
-							],
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1107.0,
+						"translation.y": 1408.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "/D/Dropbox/Documents/Classes/Past classes/MGT 6203 - Data Analytics/project/getdata.py",
-					"semi_transient": false,
+					"buffer": 2,
+					"file": "meetingtimer/.gitignore",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 2047,
+						"buffer_size": 28,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1855,
-								1855
-							]
-						],
-						"settings":
-						{
-							"origPos":
-							[
-								0.0,
-								428.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 260.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "data.tsv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 250,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								250,
-								250
+								0,
+								0
 							]
 						],
 						"settings":
@@ -728,228 +513,18 @@
 								0.0,
 								0.0
 							],
+							"syncScroll": false,
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 556,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								503,
-								503
-							]
-						],
-						"settings":
-						{
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "qunit.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 739,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								164,
-								164
-							]
-						],
-						"settings":
-						{
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": ".travis.yml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 36,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								24,
-								24
-							]
-						],
-						"settings":
-						{
-							"auto_name": "language: node_js",
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/YAML/YAML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "gulpfile.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 161,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								161,
-								161
-							]
-						],
-						"settings":
-						{
-							"auto_name": "var gulp = require('gulp'),",
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "package.json",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 289,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								284,
-								284
-							]
-						],
-						"settings":
-						{
-							"auto_name": "{",
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "tests.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 86,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								86,
-								86
-							]
-						],
-						"settings":
-						{
-							"auto_name": "QUnit.test( \"hello test\", function( assert ) {",
-							"origPos":
-							[
-								0.0,
-								0.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
+					"buffer": 3,
 					"file": "theme.css",
 					"semi_transient": false,
 					"settings":
@@ -961,8 +536,8 @@
 						"selection":
 						[
 							[
-								2142,
-								2142
+								1530,
+								1530
 							]
 						],
 						"settings":
@@ -970,57 +545,21 @@
 							"origPos":
 							[
 								0.0,
-								1821.0
+								0.0
 							],
 							"syncScroll": false,
 							"syntax": "Packages/CSS/CSS.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1821.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "timer-control.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3492,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1458,
-								1458
-							]
-						],
-						"settings":
-						{
-							"origPos":
-							[
-								0.0,
-								420.0
-							],
-							"syncScroll": false,
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 15,
+					"buffer": 4,
 					"file": "timer.js",
 					"semi_transient": false,
 					"settings":
@@ -1041,7 +580,7 @@
 							"origPos":
 							[
 								0.0,
-								84.0
+								0.0
 							],
 							"syncScroll": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
@@ -1051,7 +590,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]

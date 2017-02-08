@@ -1,0 +1,69 @@
+html, body {
+	height: 100%;
+	margin: 0;
+}
+
+.container {
+	display: flex;
+	/*align-items: stretch;*/
+	flex: 1 1 auto;
+
+	/*background: lightblue;*/
+}
+
+.widget {
+	margin: 3px;
+	background-color: gray;
+	flex: 1 1 auto;
+}
+
+.group {
+	/*border: 3px solid;*/
+	/*border-color: black;*/
+	background: lightgray;
+	margin: 5px;
+}
+
+.vertical {
+	flex-direction: column;
+}
+
+.widget_a {
+	flex: 1 1 auto;
+}
+
+.widget_b {
+	flex: 10 10 auto;
+}
+
+.container_B {
+	flex: 3 3 auto;
+}
+
+.container_C {
+	flex: 9 9 auto;
+}
+
+.container_D {
+	flex: 1 1 auto;
+}
+
+.container_E {
+	flex: 2 2 auto;
+}
+
+.container_J {
+	flex: 1 1 auto;
+}
+
+.container_F {
+	flex: 1 1 auto;
+}
+
+.container_G {
+	flex: 2 2 auto;
+}
+
+.big {
+	height: 100%;
+}

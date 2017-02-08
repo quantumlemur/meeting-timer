@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<link rel="stylesheet" type="text/css" href="test.css">
+<link rel="stylesheet" href="bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3-path.v1.min.js"></script>
+<script src="moment.min.js"></script>
+</head>
+<body>
+<p>
+	<button type="button" class="btn btn-lg btn-block" data-bind="click:add">add</button>
+</p>
+<ul data-bind="foreach:data">
+	<li data-bind="text:width"></li>
+</ul>
+
+<div id="chart">
+</div>
+<script src="test.js"></script>
+</body>
