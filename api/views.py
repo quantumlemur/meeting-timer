@@ -7,12 +7,12 @@ from .models import Hit
 import random
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the db index.")
+    return HttpResponse("Hello, world. You're at the api index.")
 
-def db(request):
+def api(request):
     hit = Hit(hit_id=str(random.random()))
     hit.save()
 
     hits = Hit.objects.all()
 
-    return render(request, 'db/db.html', {'hits': hits})
+    return render(request, 'api/api.html', {'hits': hits})
