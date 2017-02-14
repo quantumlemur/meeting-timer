@@ -2,7 +2,7 @@ var ViewModel = function() {
 	var self = this;
 
 
-	self.active = ko.observable(true)
+	self.active = ko.observable(false)
 	self.name = ko.observable("")
 	self.start = new Date()
 	self.warn = new Date() + 1000*60*8
@@ -39,18 +39,19 @@ var ViewModel = function() {
 
 	var refreshData = function() {
 		$.ajax({
-			url: 'control.html',
+			url: '../api/currentTimerInfo',
 			type: 'GET',
 			datatype: 'json',
 			success: function(msg){
-				var data = JSON.parse(msg)
-				self.active(data.active)
-				if (data.active) {
-					self.name(data.name)
-					self.start = new Date(data.start)
-					self.warn = new Date(data.warn)
-					self.end = new Date(data.end)
-					self.flash(data.flash)
+				// console.log(msg)
+				// var data = JSON.parse(msg)
+				self.active(msg.active)
+				if (msg.active) {
+					self.name(msg.name)
+					self.start = new Date(msg.start)
+					self.warn = new Date(msg.warn)
+					self.end = new Date(msg.end)
+					self.flash(msg.flash)
 
 					self.timeLeft(Math.floor((self.end - new Date())/1000))
 				}
@@ -63,7 +64,9 @@ var ViewModel = function() {
 	setInterval(function() { self.timeLeft(self.timeLeft() - 1) }, 1000)
 
 	// refresh timer every five seconds
-	// setInterval(refreshData, 5000)
+	setInterval(refreshData, 5000)
+
+	refreshData()
 }
 
 ko.applyBindings(new ViewModel());
