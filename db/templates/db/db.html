@@ -1,0 +1,21 @@
+{% extends "db/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+  <div class="container">
+
+
+<h2>Page View Report</h2>
+
+
+<ul>
+
+{% for hit in hits %}
+    <li>{{ hit.time }}</li>
+{% endfor %}
+
+</ul>
+
+</div>
+
+{% endblock %}
