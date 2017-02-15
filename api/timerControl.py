@@ -25,7 +25,6 @@ def currentTimerInfo(request):
     else:
         return JsonResponse({'error': 'no current event'})
 
-@csrf_exempt
 def updateCurrentTimer(request):
     data = request.POST
     event = CurrentEvent(

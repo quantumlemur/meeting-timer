@@ -1,0 +1,13 @@
+{% extends "timer/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class=background>
+  <div class=timerBox data-bind="visible: active, css: timeStatusClass">
+    <span data-bind="text: parsedTime"></span>
+  </div>
+</div>
+
+<script src="../static/timer.js"></script>
+
+{% endblock %}

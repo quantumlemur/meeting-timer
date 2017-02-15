@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-<link rel="stylesheet" type="text/css" href="theme.css">
+<link rel="stylesheet" type="text/css" href="../static/theme.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3-path.v1.min.js"></script>
+<script src="../static/moment.min.js"></script>
 </head>
 <body>
 
 
-<div class=background>
-  <div class=timerBox data-bind="visible: active, css: timeStatusClass">
-    <span data-bind="text: parsedTime"></span>
-  </div>
-</div>
+{% block content %}{% endblock %}
 
-
-
-
-
-<script src="timer.js"></script>
 </body>
+</html>

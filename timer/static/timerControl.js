@@ -5,6 +5,10 @@ var ViewModel = function() {
 
 	var color = d3.scale.category20c()
 
+	self.scheduleName = ko.observable(window._initialScheduleName)
+	self.scheduleDate = ko.observable(window._initialScheduleDate)
+	self.scheduleUrl = ko.observable(window._initialScheduleUrl)
+
 
 	self.warningTime = ko.observable(120) // seconds
 
@@ -543,7 +547,43 @@ var ViewModel = function() {
 				warn: self.currentEvent().actualEndTime.format(),
 				end: self.currentEvent().actualEndTime.format(),
 				flash: self.flash(),
+				csrfmiddlewaretoken: window.CSRF_TOKEN,
 			}
+		})
+	}
+
+	self.saveSchedule = function() {
+		$.ajax({
+			url: '../api/saveSchedule',
+			type: 'POST',
+			datatype: 'json',
+			data: {
+				name: self.scheduleName(),
+				date: self.scheduleDate(),
+				url: self.scheduleUrl(),
+				csrfmiddlewaretoken: window.CSRF_TOKEN,
+			}
+		})
+
+		data.forEach(function(d) {
+			$.ajax({
+				url: '../api/saveEvent',
+				type: 'POST',
+				datatype: 'json',
+				data: {
+					instanceUrl: self.scheduleUrl(),
+					id: d.id,
+					scheduledStart: d.scheduledStart,
+					actualStart: d.actualStart,
+					scheduledEnd: d.scheduledEnd,
+					actualEnd: d.actualEnd,
+					done: d.done,
+					active: d.active,
+					name: d.name,
+					speaker: d.speaker,
+					csrfmiddlewaretoken: window.CSRF_TOKEN,
+				}
+			})
 		})
 	}
 
