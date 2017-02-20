@@ -115,6 +115,7 @@ var ViewModel = function() {
 		console.log(d3.event.y, self.timeScale.invert(y)/60/60)
 		var time = Math.floor(self.timeScale.invert(y)/60) * 60
 		data.push({
+			pk: 'dummy' + Math.floor(Math.random()*999999999),
 			scheduledStart: time,
 			actualStart: time,
 			scheduledEnd: time + 60*60,
@@ -271,7 +272,7 @@ var ViewModel = function() {
 				d3.select(this)
 					.append('rect')
 					.attr('class', 'eventRect')
-					.attr('fill', function(d) { return color(d.name) })
+					.attr('fill', function(d) { return color(d.pk) })
 					.attr('x', edgePadding)
 					.attr('width', RofL-(2*edgePadding))
 					.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
@@ -329,13 +330,14 @@ var ViewModel = function() {
 		events.select('.eventRect').transition()
 			.duration(250)
 			.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
+			.attr('fill', function(d) { return color(d.scheduledStart) })
+
 
 		events.select('.eventText')
 			.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
 
 		events.select('.resizeBottom')
 			.attr('y', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) - edgePadding })
-
 
 
 

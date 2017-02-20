@@ -23,12 +23,9 @@ def saveSchedule(request):
 
 def saveEvent(request):
     p = request.POST
-    if ('pk' in p):
-        try:
-            event = Event.objects.get(pk=p['pk'])
-        except Event.DoesNotExist:
-            event = Event()
-    else:
+    try:
+        event = Event.objects.get(pk=int(p['pk']))
+    except (Event.DoesNotExist, ValueError):
         event = Event()
     event.instanceUrl = p['instanceUrl']
     event.scheduledStart = int(p['scheduledStart'])
