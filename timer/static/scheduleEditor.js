@@ -272,7 +272,7 @@ var ViewModel = function() {
 				d3.select(this)
 					.append('rect')
 					.attr('class', 'eventRect')
-					.attr('fill', function(d) { return color(d.pk) })
+					.attr('fill', function(d) { return color(d.pk).substring(0,5) })
 					.attr('x', edgePadding)
 					.attr('width', RofL-(2*edgePadding))
 					.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
@@ -330,7 +330,7 @@ var ViewModel = function() {
 		events.select('.eventRect').transition()
 			.duration(250)
 			.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
-			.attr('fill', function(d) { return color(d.scheduledStart) })
+			.attr('fill', function(d) { return color(d.pk) })
 
 
 		events.select('.eventText')
@@ -461,6 +461,7 @@ var ViewModel = function() {
 				},
 				success: function(msg) {
 					d.pk = msg.pk
+					updateTimelineDisplay()
 				}
 			})
 		})
