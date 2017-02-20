@@ -129,6 +129,8 @@ var ViewModel = function() {
 		d.scheduledEnd = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
 		d3.select(this.parentNode).select('.eventRect')
 			.attr('height', function(d) { return d3.event.y - self.timeScale(d.scheduledStart) })
+		d3.select(this.parentNode).select('.eventText')
+			.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
 	}
 
 
