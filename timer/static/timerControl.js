@@ -8,6 +8,7 @@ var ViewModel = function() {
 	self.scheduleName = ko.observable(window._initialScheduleName)
 	self.scheduleDate = ko.observable(window._initialScheduleDate)
 	self.scheduleUrl = ko.observable(window._initialScheduleUrl)
+	self.scheduleUnsaved = ko.observable(window._isNew == 'true')
 
 
 	self.warningTime = ko.observable(120) // seconds
@@ -201,11 +202,26 @@ var ViewModel = function() {
 		d3.selectAll('.speakerText#actualEvent').transition()
 			.duration(1000)
 			.attr('y', function(d) { return d.yActual+3.5+'%' })
+
+		d3.selectAll('.event#scheduledEvent').transition()
+			.duration(1000)
+			.attr('y', function(d) { return d.yScheduled+'%' })
+			.attr('height', function(d) { return d.heightScheduled+'%' })
+
+		d3.selectAll('.eventText#scheduledEvent').transition()
+			.duration(1000)
+			.attr('y', function(d) { return d.yScheduled+1+'%' })
+
+		d3.selectAll('.speakerText#scheduledEvent').transition()
+			.duration(1000)
+			.attr('y', function(d) { return d.yScheduled+3.5+'%' })
 	}
 
 
 	var updateTimings = function() {
-		console.log('=======================')
+		// console.log('=======================')
+		data.sort()
+
 		// go through all the events and update their timings and durations here
 		for (var i=0; i<data.length; i++) {
 			e = data[i]
@@ -213,7 +229,7 @@ var ViewModel = function() {
 			var diff = 0
 			if (i>0) {
 				diff = data[i-1].actualEndTime.diff(e.actualStartTime)
-				console.log(i, diff)
+				// console.log(i, diff)
 			}
 
 			if (diff < 0) {
@@ -222,7 +238,7 @@ var ViewModel = function() {
 				if (endDiff < 0) {
 					// and we're running behind schedule
 					// then move the event up to fill in the gap
-					console.log('running behind', diff/1000/60, endDiff/1000/60)
+					// console.log('running behind', diff/1000/60, endDiff/1000/60)
 					e.actualStartTime.add(Math.max(diff, endDiff))
 					e.actualStart = e.actualStartTime.format('YYYY-MM-DD HH:MM:SS')
 					e.actualEndTime.add(Math.max(diff, endDiff))
@@ -255,9 +271,9 @@ var ViewModel = function() {
 			}
 		}
 		updateTimelineDisplay()
-		for (var i=0; i<data.length; i++) {
-			console.log(data[i].actualStartTime.format('LT'), "     ", data[i].actualEndTime.format('LT'))
-		}
+		// for (var i=0; i<data.length; i++) {
+		// 	console.log(data[i].actualStartTime.format('LT'), "     ", data[i].actualEndTime.format('LT'))
+		// }
 	}
 
 
@@ -413,8 +429,11 @@ var ViewModel = function() {
 				.data(data)
 			.enter()
 
+
+
 		// left
 		events.append('rect')
+				.attr('id', 'scheduledEvent')
 				.attr('class', 'event')
 				.attr('fill', function(d) { return color(d.name) })
 				.attr('x', '1%')
@@ -423,12 +442,14 @@ var ViewModel = function() {
 				.attr('height', function(d) { return d.heightScheduled+'%' })
 
 		events.append('text')
+				.attr('id', 'scheduledEvent')
 				.attr('class', 'eventText')
 				.text(function(d) { return d.displayNameScheduled })
 				.attr('x', '2%')
 				.attr('y', function(d) { return d.yScheduled+1+'%' })
 
 		events.append('text')
+				.attr('id', 'scheduledEvent')
 				.attr('class', 'speakerText')
 				.text(function(d) { return d.speaker })
 				.attr('x', '2%')
@@ -457,6 +478,74 @@ var ViewModel = function() {
 				.text(function(d) { return d.speaker })
 				.attr('x', LofR+2+'%')
 				.attr('y', function(d) { return d.yActual+3.5+'%' })
+
+
+
+
+
+
+
+		var dragScheduled = d3.behavior.drag()
+			.origin(function(d) { return {x:0, y:d.yScheduled } })
+			.on('dragstart', dragstarted)
+			.on('drag', draggedSchedule)
+			.on('dragend', dragend)
+
+		var dragActual = d3.behavior.drag()
+			.origin(function(d) { return {x:0, y:d.yActual } })
+			.on('dragstart', dragstarted)
+			.on('drag', draggedActual)
+			.on('dragend', dragend)
+
+		function dragstarted(d) {
+			d3.event.sourceEvent.stopPropagation()
+		}
+
+		function draggedSchedule(d) {
+			d.scheduledStartTime = moment(timeScale.invert(d3.event.y))
+			d.yScheduled = timeScale(d.scheduledStartTime)
+			d.scheduledEndTime = d.scheduledStartTime.add(d.scheduledDuration)
+
+			d3.selectAll('.event#scheduledEvent')
+				.attr('y', function(d) { return d.yScheduled+'%' })
+				.attr('height', function(d) { return d.heightScheduled+'%' })
+
+			d3.selectAll('.eventText#scheduledEvent')
+				.attr('y', function(d) { return d.yScheduled+1+'%' })
+
+			d3.selectAll('.speakerText#scheduledEvent')
+				.attr('y', function(d) { return d.yScheduled+3.5+'%' })
+		}
+
+		function draggedActual(d) {
+			d.actualStartTime = moment(timeScale.invert(d3.event.y))
+			d.yActual = timeScale(d.actualStartTime)
+			d.actualEndTime = d.actualStartTime.add(d.actualDuration)
+
+			d3.selectAll('.event#actualEvent')
+				.attr('y', function(d) { return d.yActual+'%' })
+				.attr('height', function(d) { return d.heightActual+'%' })
+
+			d3.selectAll('.eventText#actualEvent')
+				.attr('y', function(d) { return d.yActual+1+'%' })
+
+			d3.selectAll('.speakerText#actualEvent')
+				.attr('y', function(d) { return d.yActual+3.5+'%' })
+		}
+
+		function dragend(d) {
+			updateTimings()
+		}
+		d3.selectAll('.event#scheduledEvent').call(dragScheduled)
+		d3.selectAll('.event#actualEvent').call(dragActual)
+
+
+
+
+
+
+
+
 
 
 		var genPath = function(d) {
@@ -537,7 +626,7 @@ var ViewModel = function() {
 
 	self.postCurrentEventInfo = function() {
 		$.ajax({
-			url: '../api/updateCurrentTimer',
+			url: '../updateCurrentTimer',
 			type: 'POST',
 			datatype: 'json',
 			data: {
@@ -553,8 +642,9 @@ var ViewModel = function() {
 	}
 
 	self.saveSchedule = function() {
+		console.log(self.scheduleName())
 		$.ajax({
-			url: '../api/saveSchedule',
+			url: '../saveSchedule',
 			type: 'POST',
 			datatype: 'json',
 			data: {
@@ -567,7 +657,7 @@ var ViewModel = function() {
 
 		data.forEach(function(d) {
 			$.ajax({
-				url: '../api/saveEvent',
+				url: '../saveEvent',
 				type: 'POST',
 				datatype: 'json',
 				data: {
@@ -585,6 +675,8 @@ var ViewModel = function() {
 				}
 			})
 		})
+
+		self.scheduleUnsaved(false)
 	}
 
 	render()

@@ -32,45 +32,162 @@
 	"buffers":
 	[
 		{
-			"file": "timer-control.html",
+			"file": "api/urls.py",
 			"settings":
 			{
-				"buffer_size": 3501,
+				"buffer_size": 541,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "timer-control.js",
+			"file": "api/timerControl.py",
 			"settings":
 			{
-				"buffer_size": 17610,
+				"buffer_size": 1203,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "meetingtimer/.gitignore",
+			"file": "api/tests.py",
 			"settings":
 			{
-				"buffer_size": 28,
+				"buffer_size": 60,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "theme.css",
+			"file": "api/views.py",
 			"settings":
 			{
-				"buffer_size": 2326,
+				"buffer_size": 367,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "api/models.py",
+			"settings":
+			{
+				"buffer_size": 1024,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "timer/models.py",
+			"settings":
+			{
+				"buffer_size": 915,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "timer/static/theme.css",
+			"settings":
+			{
+				"buffer_size": 2402,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "timer.js",
+			"contents": "data.map(function(d) {\n\td.scheduledStartTime = moment(d.scheduledStart)\n\td.scheduledEndTime = moment(d.scheduledEnd)\n\td.actualStartTime = moment(d.actualStart)\n\td.actualEndTime = moment(d.actualEnd)\n\n\td.scheduledDuration = d.scheduledEndTime.diff(d.scheduledStartTime)\n\td.actualDuration = d.actualEndTime.diff(d.actualStartTime)\n\n\td.yScheduled = timeScale(d.scheduledStartTime)\n\td.heightScheduled = timeScale(d.scheduledEndTime) - timeScale(d.scheduledStartTime)\n\td.yActual = timeScale(d.actualStartTime)\n\td.heightActual = timeScale(d.actualEndTime) - timeScale(d.actualStartTime)\n\n\td.displayNameScheduled = d.name + ' (' + d.scheduledEndTime.diff(d.scheduledStartTime, 'minutes') + 'm)'\n\td.displayNameActual = d.name + ' (' + d.actualEndTime.diff(d.actualStartTime, 'minutes') + 'm)'\n\n})",
 			"settings":
 			{
-				"buffer_size": 1606,
+				"buffer_size": 788,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "meetingtimer/settings.py",
+			"settings":
+			{
+				"buffer_size": 4198,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "timer/views.py",
+			"settings":
+			{
+				"buffer_size": 1836,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "timer/templates/timer/timerControl.html",
+			"settings":
+			{
+				"buffer_size": 3809,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "timer/templates/timer/scheduleEditor.html",
+			"settings":
+			{
+				"buffer_size": 1030,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "timer/templates/timer/timer.html",
+			"settings":
+			{
+				"buffer_size": 492,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "timer/urls.py",
+			"settings":
+			{
+				"buffer_size": 691,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "timer/static/timer.js",
+			"settings":
+			{
+				"buffer_size": 1754,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "api/scheduleControl.py",
+			"settings":
+			{
+				"buffer_size": 624,
+				"encoding": "UTF-8",
+				"line_ending": "Windows",
+				"name": "eventC"
+			}
+		},
+		{
+			"file": "timer/static/timerControl.js",
+			"settings":
+			{
+				"buffer_size": 21511,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "timer/static/scheduleEditor.js",
+			"settings":
+			{
+				"buffer_size": 10249,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -156,10 +273,51 @@
 	},
 	"expanded_folders":
 	[
-		"/D/Dropbox/Documents/Projects/meeting-timer"
+		"/D/Dropbox/Documents/Projects/meeting-timer",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/migrations",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/templates",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/templates/api",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/static",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/static",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/templates",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/templates/timer"
 	],
 	"file_history":
 	[
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/templates/timer/create.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/templates/timer/timerControl.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/templates/base.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/templates/timer-control.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer/templates/timer.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/urls.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/urls.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/static/timer.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/static/timer-control.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/requirements.txt",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/templates/api/api.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/apps.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/Procfile",
+		"/D/Dropbox/Documents/Projects/meeting-timer/Procfile.windows",
+		"/D/Dropbox/Documents/Projects/meeting-timer/db.sqlite3",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/static/timer.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/static/timer-control.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/db/models.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/db/views.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/migrations/0003_auto_20170214_1412.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/api/migrations/0002_auto_20170214_1410.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/db/templates/db/db.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/db/urls.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/db.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/db/templates/base.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/db/templates/db.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/test.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/meetingtimer/models.py",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer-control.html",
+		"/D/Dropbox/Documents/Projects/meeting-timer/timer-control.js",
+		"/D/Dropbox/Documents/Projects/meeting-timer/theme.css",
 		"/D/Dropbox/Documents/Projects/meeting-timer/test.html",
 		"/D/Dropbox/Documents/Projects/meeting-timer/flextest.js",
 		"/D/Dropbox/Documents/Projects/meeting-timer/test.css",
@@ -259,6 +417,47 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"RofL",
+			", ",
+			"format",
+			"Actual",
+			"actual",
+			"scheduledtartTime",
+			"updateRunning",
+			"yactual",
+			"scheduled",
+			"Scheduled",
+			"scheduled",
+			"Scheduled",
+			"scheduled",
+			"Scheduled",
+			"scheduled",
+			"transition",
+			"updateRunning",
+			"console.log",
+			"heightActual",
+			"yActual",
+			"actualEvent",
+			"e.",
+			"False",
+			"text:",
+			"text",
+			"header",
+			"data",
+			"saveSchedule",
+			"saveEvent",
+			"Instance",
+			"data",
+			"datetime.strptime",
+			" ',",
+			"= ",
+			"Time()",
+			"self",
+			"currentTimerInfo",
+			"db",
+			"greeting",
+			"dj_database_url",
+			"',\n",
 			"min",
 			"Start",
 			"currentEvent",
@@ -345,48 +544,7 @@
 			"  ",
 			"<br/>",
 			"\"\t",
-			"\"\t\t\t",
-			"<td>",
-			"\"\t",
-			"\"\t\t\t",
-			"</td>",
-			"<td>",
-			"<br/>",
-			"</span></div></th>",
-			"<div><span>",
-			"th class=\"rotate-45\"",
-			"class=\"rotate-45\"",
-			"<span>",
-			"span",
-			"carlieshields94@gmail.com\nwcodycarp@gmail.com\nmechen.fletcher@gmail.com\nspencerhmanning@gmail.com\natittan.sritharan@gmail.com\ntngo33@gatech.edu\nZiyiWang@gatech.edu\nmolnar0@purdue.edu\nkirk9@purdue.edu\nvsarda@purdue.edu\nbgrantb@gmail.com\ncbaile4@gmail.com\ncomptonjeffrey@gmail.com\nayenawi@g.clemson.edu\nclaytoe@g.clemson.edu\nlbreivi@g.clemson.edu\nmsallen@g.clemson.edu\nklane32@gatech.edu\nmgilmartin3@gatech.edu\nsalahtarazi@yahoo.com",
-			"program_id",
-			"program_id=",
-			"(SELECT node_id FROM Tech_Challenges_Attributes WHERE program_id='(P)' AND version='working')",
-			"(SELECT node_id FROM Tech_Challenges_Attributes WHERE program_id='(Ex)' AND version='working')",
-			"Ex",
-			"55",
-			"startingYear",
-			"set_visible",
-			"()",
-			"get_",
-			" ",
-			"ndarray",
-			"a",
-			"*2-1",
-			"100",
-			"a.",
-			"a.cross",
-			"absolute",
-			"abs",
-			">\n",
-			"div",
-			"text: ",
-			"list/print proposals by affiliate",
-			"href",
-			"reports",
-			"select",
-			"sekect",
-			"css"
+			"\"\t\t\t"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -409,24 +567,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 7,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "timer-control.html",
+					"file": "api/urls.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3501,
+						"buffer_size": 541,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2617,
-								2411
+								337,
+								337
 							]
 						],
 						"settings":
@@ -434,41 +592,33 @@
 							"origPos":
 							[
 								0.0,
-								588.0
+								0.0
 							],
 							"syncScroll": false,
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 588.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 10,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 1,
-			"sheets":
-			[
+				},
 				{
 					"buffer": 1,
-					"file": "timer-control.js",
+					"file": "api/timerControl.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17610,
+						"buffer_size": 1203,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4471,
-								4471
+								1203,
+								1203
 							]
 						],
 						"settings":
@@ -476,26 +626,24 @@
 							"origPos":
 							[
 								0.0,
-								1408.0
+								0.0
 							],
-							"syncScroll": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1408.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "meetingtimer/.gitignore",
+					"file": "api/tests.py",
 					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 28,
+						"buffer_size": 60,
 						"regions":
 						{
 						},
@@ -514,30 +662,30 @@
 								0.0
 							],
 							"syncScroll": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 15,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "theme.css",
+					"file": "api/views.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2326,
+						"buffer_size": 367,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1530,
-								1530
+								114,
+								114
 							]
 						],
 						"settings":
@@ -548,8 +696,356 @@
 								0.0
 							],
 							"syncScroll": false,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "api/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1024,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								200,
+								249
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "timer/models.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 915,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								915,
+								915
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "timer/static/theme.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2402,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1592,
+								1592
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								1344.0
+							],
+							"syncScroll": false,
 							"syntax": "Packages/CSS/CSS.sublime-syntax",
 							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1344.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 788,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								709,
+								709
+							]
+						],
+						"settings":
+						{
+							"default_dir": "D:\\Dropbox\\Documents\\Projects\\meeting-timer",
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 9,
+			"sheets":
+			[
+				{
+					"buffer": 8,
+					"file": "meetingtimer/settings.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4198,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1449,
+								1449
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "timer/views.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1836,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1070,
+								1070
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "timer/templates/timer/timerControl.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3809,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								3809
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "timer/templates/timer/scheduleEditor.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1030,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								676,
+								676
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "timer/templates/timer/timer.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 492,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								394,
+								413
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/HTML/HTML.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "timer/urls.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 691,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53,
+								53
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -559,20 +1055,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "timer.js",
+					"buffer": 14,
+					"file": "timer/static/timer.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1606,
+						"buffer_size": 1754,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								935,
-								935
+								821,
+								821
 							]
 						],
 						"settings":
@@ -580,17 +1076,120 @@
 							"origPos":
 							[
 								0.0,
-								0.0
+								126.0
 							],
 							"syncScroll": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
+						"translation.y": 126.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "api/scheduleControl.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 624,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								624,
+								624
+							]
+						],
+						"settings":
+						{
+							"auto_name": "eventC",
+							"origPos":
+							[
+								0.0,
+								0.0
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "timer/static/timerControl.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21511,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								21511
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								2920.0
+							],
+							"syncScroll": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2920.0,
+						"zoom_level": 1.0
+					},
 					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "timer/static/scheduleEditor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10249,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5571,
+								5571
+							]
+						],
+						"settings":
+						{
+							"origPos":
+							[
+								0.0,
+								1764.0
+							],
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 3.0,
+						"translation.y": 1764.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -602,7 +1201,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 32.0
 	},
 	"layout":
 	{

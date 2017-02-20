@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class CurrentEvent(models.Model):
+    instanceUrl = models.CharField(max_length=5)
     active = models.BooleanField()
     name = models.CharField(max_length=200)
     start = models.DateTimeField()

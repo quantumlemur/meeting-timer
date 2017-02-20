@@ -1,4 +1,5 @@
-body {
+html, body {
+	height: 100%;
 	margin: 0px;
 }
 
@@ -45,16 +46,21 @@ body {
 
 /* Timer control page below here */
 
+.header {
+	height: 5vh;
+	margin: 1vh;
+}
+
 .schedulePane {
 	width: 60%;
-	height: 90vh;
+	height: 80vh;
 	margin: 3vh;
 	float: left;
 }
 
 .controlsPane {
 	width: 30%;
-	height: 90vh;
+	height: 80vh;
 	margin: 3vh;
 	float: right;
 }
@@ -110,10 +116,12 @@ body {
 
 .event {
 	text-align: center;
+	cursor: move;
+}
+
+.eventRect {
 	rx: 5;
 	ry: 5;
-	shape-rendering: crispEdges;
-
 }
 
 .svgOverlay {

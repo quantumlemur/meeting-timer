@@ -39,9 +39,13 @@ var ViewModel = function() {
 
 	var refreshData = function() {
 		$.ajax({
-			url: '../api/currentTimerInfo',
-			type: 'GET',
+			url: '../currentTimerInfo',
+			type: 'POST',
 			datatype: 'json',
+			data: {
+				scheduleUrl: window._initialScheduleUrl,
+				csrfmiddlewaretoken: window.CSRF_TOKEN,
+			},
 			success: function(msg){
 				// console.log(msg)
 				// var data = JSON.parse(msg)

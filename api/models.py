@@ -5,6 +5,7 @@ class Hit(models.Model):
     time = models.DateTimeField('timestamp', auto_now_add=True)
 
 class CurrentEvent(models.Model):
+    instanceUrl = models.CharField(max_length=5)
     active = models.BooleanField()
     name = models.CharField(max_length=200)
     start = models.DateTimeField()
