@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^updateCurrentTimer', timerControl.updateCurrentTimer, name='updateCurrentTimer'),
     url(r'^saveSchedule', scheduleControl.saveSchedule, name='saveSchedule'),
     url(r'^saveEvent', scheduleControl.saveEvent, name='saveEvent'),
+    url(r'^loadScheduleEvents', scheduleControl.loadScheduleEvents, name='loadScheduleEvents'),
 ]

@@ -1,8 +1,12 @@
 import dateutil.parser
 
+from django.core import serializers
 from django.http import HttpResponse
+from django.http import JsonResponse
+
 
 from .models import schedulerInstance
+from .models import Event
 
 def saveSchedule(request):
     url = request.POST['url']
@@ -18,4 +22,33 @@ def saveSchedule(request):
     return HttpResponse('I think it worked')
 
 def saveEvent(request):
-    return HttpResponse('WIP')
+    p = request.POST
+    if ('pk' in p):
+        try:
+            event = Event.objects.get(pk=p['pk'])
+        except Event.DoesNotExist:
+            event = Event()
+    event.instanceUrl = p['instanceUrl']
+    event.scheduledStart = int(p['scheduledStart'])
+    event.actualStart = int(p['actualStart'])
+    event.scheduledEnd = int(p['scheduledEnd'])
+    event.actualEnd = int(p['actualEnd'])
+    event.done = p['done'] == 'true'
+    event.active = p['active'] == 'true'
+    event.name = p['name']
+    event.speaker = p['speaker']
+    event.save()
+    return JsonResponse({'pk': event.pk})
+
+def loadScheduleEvents(request):
+    url = request.POST['url']
+    events = Event.objects.filter(instanceUrl=url)
+    # out = []
+    # for event in events:
+    #     out.append(serializers.serialize('json', [event, ]))
+    # print('============================================')
+    # print(out)
+    return HttpResponse(serializers.serialize('json', events), content_type='application/json')
+
+
+

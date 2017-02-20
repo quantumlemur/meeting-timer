@@ -17,10 +17,10 @@ class schedulerInstance(models.Model):
 
 class Event(models.Model):
     instanceUrl = models.CharField(max_length=5)
-    scheduledStart = models.DateTimeField()
-    actualStart = models.DateTimeField()
-    scheduledEnd = models.DateTimeField()
-    actualEnd = models.DateTimeField()
+    scheduledStart = models.IntegerField()
+    actualStart = models.IntegerField()
+    scheduledEnd = models.IntegerField()
+    actualEnd = models.IntegerField()
     done = models.BooleanField()
     active = models.BooleanField()
     name = models.CharField(max_length=200)

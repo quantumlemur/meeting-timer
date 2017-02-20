@@ -14,7 +14,7 @@ def timer(request, url=''):
     try:
         instance = schedulerInstance.objects.get(url=url)
         name = instance.name
-        date = instance.date
+        date = instance.date.date()
         isNew = 'false'
     except schedulerInstance.DoesNotExist:
         if len(url) == 0:
@@ -28,7 +28,7 @@ def timerControl(request, url=''):
     try:
         instance = schedulerInstance.objects.get(url=url)
         name = instance.name
-        date = instance.date
+        date = instance.date.date()
         isNew = 'false'
     except schedulerInstance.DoesNotExist:
         if len(url) == 0:
@@ -42,7 +42,7 @@ def scheduleEditor(request, url=''):
     try:
         instance = schedulerInstance.objects.get(url=url)
         name = instance.name
-        date = instance.date
+        date = instance.date.date()
         isNew = 'false'
     except schedulerInstance.DoesNotExist:
         if len(url) == 0:
