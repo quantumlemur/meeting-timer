@@ -12,7 +12,10 @@
 				<input type="text" class="form-control" id="scheduleDate" data-bind="textInput: scheduleDate">
 			</div>
 			<button type="button" class="btn btn-default" data-bind="click:saveSchedule, css: { 'btn-primary': scheduleUnsaved}">Save Schedule</button>
+			<a href="../control/{{url}}" target="_blank"><button type="button" class="btn btn-default">Open Timer Control</button></a>
+			<a href="../timer/{{url}}" target="_blank"><button type="button" class="btn btn-default">Open Timer</button></a>
 		</form>
+	</div>
 	<div class=schedulePane>
 		<div class=scheduleHeader>
 			<div class="scheduleHeaderText h1">Scheduled</div>

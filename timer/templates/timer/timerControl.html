@@ -5,14 +5,10 @@
 <body>
 	<div class=header>
 		<form class="form-inline">
-			<div class="form-group">
-				<input type="text" class="form-control" id="scheduleName" data-bind="textInput: scheduleName">
-			</div>
-			<div class="form-group">
-				<input type="text" class="form-control" id="scheduleDate" data-bind="textInput: scheduleDate">
-			</div>
-			<button type="button" class="btn btn-default" data-bind="click:saveSchedule, css: { 'btn-primary': scheduleUnsaved}">Save Schedule</button>
+			<a href="../scheduleEditor/{{url}}" target="_blank"><button type="button" class="btn btn-default">Open Schedule Editor</button></a>
+			<a href="../timer/{{url}}" target="_blank"><button type="button" class="btn btn-default">Open Timer</button></a>
 		</form>
+	</div>
 	<div class=schedulePane>
 		<div class=scheduleHeader>
 			<div class="scheduleHeaderText left h1">Scheduled</div>
