@@ -28,6 +28,8 @@ def saveEvent(request):
             event = Event.objects.get(pk=p['pk'])
         except Event.DoesNotExist:
             event = Event()
+    else:
+        event = Event()
     event.instanceUrl = p['instanceUrl']
     event.scheduledStart = int(p['scheduledStart'])
     event.actualStart = int(p['actualStart'])

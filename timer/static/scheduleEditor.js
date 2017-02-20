@@ -15,36 +15,9 @@ var ViewModel = function() {
 	self.LofR = 100-self.RofL
 
 	var data = []
-	// assumed to be sorted by scheduledStart
-	// var data = [
-	// 		// {"id":"a", "scheduledStart":"2016-11-30 17:17:00", "scheduledEnd":"2016-11-30 17:18:00", "actualStart":"2016-11-30 17:17:00", "actualEnd":"2016-11-30 17:18:00", "done":true, "active":false, "name":"lunch", "speaker":""},
-	// 		// {"id":"b", "scheduledStart":"2016-11-30 17:18:00", "scheduledEnd":"2016-11-30 18:19:00", "actualStart":"2016-11-30 17:18:00", "actualEnd":"2016-11-30 18:19:00", "done":false, "active":true, "name":"meeting", "speaker":"speaker"}
-	// 		// {"id":"c", "scheduledStart":"2016-11-30 11:17:00", "scheduledEnd":"2016-11-30 12:17:00", "actualStart":"2016-11-30 11:17:00", "actualEnd":"2016-11-30 12:17:00", "done":false, "active":false, "name":"another meeting", "speaker":"another speaker"},
-	// 		// {"id":"d", "scheduledStart":"2016-11-30 12:17:00", "scheduledEnd":"2016-11-30 13:17:00", "actualStart":"2016-11-30 12:17:00", "actualEnd":"2016-11-30 13:17:00", "done":false, "active":false, "name":"coffee break", "speaker":""},
-	// 		// {"id":"e", "scheduledStart":"2016-11-30 13:17:00", "scheduledEnd":"2016-11-30 14:17:00", "actualStart":"2016-11-30 13:17:00", "actualEnd":"2016-11-30 14:17:00", "done":false, "active":false, "name":"networking", "speaker":""},
-	// 		// {"id":"f", "scheduledStart":"2016-11-30 14:17:00", "scheduledEnd":"2016-11-30 15:17:00", "actualStart":"2016-11-30 14:17:00", "actualEnd":"2016-11-30 15:17:00", "done":false, "active":false, "name":"yet another meeting", "speaker":"the pope"},
-	// 		// {"id":"g", "scheduledStart":"2016-11-30 15:17:00", "scheduledEnd":"2016-11-30 16:17:00", "actualStart":"2016-11-30 15:17:00", "actualEnd":"2016-11-30 16:17:00", "done":false, "active":false, "name":"watching paint dry", "speaker":"Mario the Painter"},
-	// 		// {"id":"h", "scheduledStart":"2016-11-30 16:17:00", "scheduledEnd":"2016-11-30 17:17:00", "actualStart":"2016-11-30 16:17:00", "actualEnd":"2016-11-30 17:17:00", "done":false, "active":false, "name":"evaporating into thin air", "speaker":"a water molecule"},
-	// 		// {"id":"i", "scheduledStart":"2016-11-30 17:17:00", "scheduledEnd":"2016-11-30 18:17:00", "actualStart":"2016-11-30 17:17:00", "actualEnd":"2016-11-30 18:17:00", "done":false, "active":false, "name":"unicycle practice", "speaker":"a clown car full of clowns"}
-	// 	]
 
-	// var d = new Date()
-	// var tstart = d.getHours()*60*60 + d.getMinutes()*60 + d.getSeconds() - 60
-	// var tnumEvents = 3
-	// var tlenEvents = 20*60
-	// for (var i=0; i<tnumEvents; i++) {
-	// 	id = Math.floor(Math.random()*99999)
-	// 	data.push({
-	// 		id: id,
-	// 		scheduledStart: tstart,
-	// 		scheduledEnd: tstart + tlenEvents,
-	// 		done: false,
-	// 		active: false,
-	// 		name: id,
-	// 		speaker: id,
-	// 	})
-	// 	tstart += tlenEvents
-	// }
+
+
 
 
 	function formatTime(s) {
@@ -140,21 +113,83 @@ var ViewModel = function() {
 		var y = d3.mouse(this)[1]
 		console.log(d3.mouse(this))
 		console.log(d3.event.y, self.timeScale.invert(y)/60/60)
-		var pk = Math.floor(Math.random()*99999)
 		var time = Math.floor(self.timeScale.invert(y)/60) * 60
 		data.push({
-			pk: pk,
 			scheduledStart: time,
 			actualStart: time,
 			scheduledEnd: time + 60*60,
 			actualEnd: time + 60*60,
 			done: false,
 			active: false,
-			name: pk,
-			speaker: pk,
+			name: 'Event Name',
+			speaker: 'Event Speaker',
 		})
 
 		updateTimings()
+	}
+
+	var textClick = function(d) {
+		d3.event.stopPropagation()
+		var eventBase = d3.select(this.parentNode)
+		var form = eventBase.append('foreignObject').attr('class', 'textEditorBox')
+			.attr('x', edgePadding*2)
+			.attr('y', edgePadding/2)
+			.attr('font-size', '.9em')
+		var input = form.append('xhtml:form')
+			.append('input')
+				.style('width', (self.RofL-(4*edgePadding))+'px')
+				.on('mousedown', function(d) { d3.event.stopPropagation() })
+				.attr('value', function() {
+					this.focus()
+					return d.name
+				})
+				.on('blur', function() {
+					d.name = input.node().value
+					eventBase.select('.eventText')
+						.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
+					d3.select('.textEditorBox').remove()
+				})
+				.on('keypress', function() {
+					if (d3.event.keyCode == 13) {
+						d3.event.preventDefault()
+						d.name = input.node().value
+						eventBase.select('.eventText')
+							.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
+						d3.select('.textEditorBox').remove()
+					}
+				})
+	}
+
+	var speakerClick = function(d) {
+		d3.event.stopPropagation()
+		var eventBase = d3.select(this.parentNode)
+		var form = eventBase.append('foreignObject').attr('class', 'textEditorBox')
+			.attr('x', edgePadding*2)
+			.attr('y', edgePadding*2.5)
+			.attr('font-size', '.9em')
+		var input = form.append('xhtml:form')
+			.append('input')
+				.style('width', (self.RofL-(4*edgePadding))+'px')
+				.on('mousedown', function(d) { d3.event.stopPropagation() })
+				.attr('value', function() {
+					this.focus()
+					return d.speaker
+				})
+				.on('blur', function() {
+					d.speaker = input.node().value
+					eventBase.select('.speakerText')
+						.text(function(d) { return d.speaker })
+					d3.select('.textEditorBox').remove()
+				})
+				.on('keypress', function() {
+					if (d3.event.keyCode == 13) {
+						d3.event.preventDefault()
+						d.speaker = input.node().value
+						eventBase.select('.speakerText')
+							.text(function(d) { return d.speaker })
+						d3.select('.textEditorBox').remove()
+					}
+				})
 	}
 
 
@@ -267,13 +302,17 @@ var ViewModel = function() {
 					.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
 					.attr('x', 2*edgePadding)
 					.attr('y', edgePadding)
+					.style('cursor', 'text')
+					.on('click', textClick)
 				
 				d3.select(this)
 					.append('text')
 					.attr('class', 'speakerText')
-					.text(function(d, i) { return d.speaker + '   ' + i })
+					.text(function(d, i) { return d.speaker })
 					.attr('x', 2*edgePadding)
 					.attr('y', 3*edgePadding)
+					.style('cursor', 'text')
+					.on('click', speakerClick)
 			})
 
 			
@@ -384,28 +423,7 @@ var ViewModel = function() {
 
 	}
 
-	self.loadScheduleEvents = function() {
-		$.ajax({
-			url: '../loadScheduleEvents',
-			type: 'POST',
-			datatype: 'json',
-			data: {
-				csrfmiddlewaretoken: window.CSRF_TOKEN,
-				url: self.scheduleUrl(),
-			},
-			success: function(msg) {
-				data = msg.map(function(d) {
-					var out = { pk: d.pk }
-					Object.keys(d.fields).forEach(function(k) {
-						out[k] = d.fields[k]
-					})
-					return out
-				})
-				console.log(msg)
-				updateTimings()
-			}
-		})
-	}
+
 
 
 	self.saveSchedule = function() {
@@ -448,14 +466,36 @@ var ViewModel = function() {
 		self.scheduleUnsaved(false)
 	}
 
-
+	self.loadScheduleEvents = function() {
+		$.ajax({
+			url: '../loadScheduleEvents',
+			type: 'POST',
+			datatype: 'json',
+			data: {
+				csrfmiddlewaretoken: window.CSRF_TOKEN,
+				url: self.scheduleUrl(),
+			},
+			success: function(msg) {
+				data = msg.map(function(d) {
+					var out = { pk: d.pk }
+					Object.keys(d.fields).forEach(function(k) {
+						out[k] = d.fields[k]
+					})
+					return out
+				})
+				console.log(msg)
+				render()
+				updateTimings()
+			}
+		})
+	}
+	
+	self.loadScheduleEvents()
 
 	window.onresize = function() {
 		render()
 	}
 
-	render()
-	self.loadScheduleEvents()
 
 }
 
