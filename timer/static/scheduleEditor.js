@@ -51,9 +51,11 @@ var ViewModel = function() {
 	function draggedSchedule(d) {
 		var duration = d.scheduledEnd - d.scheduledStart
 		d.scheduledStart = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
+		d.actualStart = d.scheduledStart
 		d.scheduledEnd = d.scheduledStart + duration
+		d.actualEnd = d.scheduledEnd
 		d3.select(this)
-			.attr('transform', function(d) { return 'translate(1,' + d3.event.y + ')' })
+			.attr('transform', function(d) { return 'translate(0,' + d3.event.y + ')' })
 	}
 	function dragend(d) {
 		d3.select(this).style('opacity', '1')
@@ -76,8 +78,9 @@ var ViewModel = function() {
 	function resizedTop(d) {
 		console.log(d3.event.y)
 		d.scheduledStart = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
+		d.actualStart = d.scheduledStart
 		d3.select(this.parentNode)
-			.attr('transform', function(d) { return 'translate(1,' + d3.event.y + ')' })
+			.attr('transform', function(d) { return 'translate(0,' + d3.event.y + ')' })
 		d3.select(this.parentNode).select('.eventRect')
 			.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - d3.event.y })
 		d3.select(this.parentNode).select('.eventText')
@@ -100,6 +103,7 @@ var ViewModel = function() {
 	function resizedBottom(d) {
 		console.log(d3.event.y)
 		d.scheduledEnd = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
+		d.actualEnd = d.scheduledEnd
 		d3.select(this.parentNode).select('.eventRect')
 			.attr('height', function(d) { return d3.event.y - self.timeScale(d.scheduledStart) })
 		d3.select(this.parentNode).select('.eventText')
@@ -209,7 +213,9 @@ var ViewModel = function() {
 				diff = data[i-1].scheduledEnd - e.scheduledStart
 				if (diff > 0) {
 					e.scheduledStart += diff
+					e.actualStart = e.scheduledStart
 					e.scheduledEnd += diff
+					e.actualEnd = e.scheduledEnd
 					self.scheduleUnsaved(true)
 					// console.log('new time', e.scheduledStart/60)
 				}
@@ -266,7 +272,7 @@ var ViewModel = function() {
 			.append('g')
 			.attr('id', 'scheduledEvent')
 			.attr('class', 'event')
-			.attr('transform', function(d) { return 'translate(1,' + self.timeScale(d.scheduledStart) + ')' })
+			.attr('transform', function(d) { return 'translate(0,' + self.timeScale(d.scheduledStart) + ')' })
 			.call(dragScheduled)
 			.each(function(d) {
 				d3.select(this)
@@ -325,7 +331,7 @@ var ViewModel = function() {
 		// go through all the events and update the timeline display here
 		events.transition()
 			.duration(250)
-			.attr('transform', function(d) { return 'translate(1,' + self.timeScale(d.scheduledStart) + ')' })
+			.attr('transform', function(d) { return 'translate(0,' + self.timeScale(d.scheduledStart) + ')' })
 
 		events.select('.eventRect').transition()
 			.duration(250)
