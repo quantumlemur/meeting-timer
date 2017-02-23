@@ -9,6 +9,7 @@ var ViewModel = function() {
 	self.scheduleName = ko.observable(window._initialScheduleName)
 	self.scheduleDate = ko.observable(window._initialScheduleDate)
 	self.scheduleUrl = ko.observable(window._initialScheduleUrl)
+	self.scheduleActiveEvent = ko.observable(window._initialActiveEvent)
 	self.scheduleUnsaved = ko.observable(window._isNew == 'true')
 
 	self.RofL = (100-gutterWidth)/2
@@ -125,7 +126,6 @@ var ViewModel = function() {
 			scheduledEnd: time + 60*60,
 			actualEnd: time + 60*60,
 			done: false,
-			active: false,
 			name: 'Event Name',
 			speaker: 'Event Speaker',
 		})
@@ -282,6 +282,7 @@ var ViewModel = function() {
 					.attr('x', edgePadding)
 					.attr('width', RofL-(2*edgePadding))
 					.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
+					.style('cursor', 'move')
 
 				d3.select(this)
 					.append('rect')
@@ -306,7 +307,7 @@ var ViewModel = function() {
 				d3.select(this)
 					.append('text')
 					.attr('class', 'eventText')
-					.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
+					.text(function(d) { return d.name + ' (' + Math.floor((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
 					.attr('x', 2*edgePadding)
 					.attr('y', edgePadding)
 					.style('cursor', 'text')
@@ -340,7 +341,7 @@ var ViewModel = function() {
 
 
 		events.select('.eventText')
-			.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
+			.text(function(d) { return d.name + ' (' + Math.floor((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
 
 		events.select('.resizeBottom')
 			.attr('y', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) - edgePadding })
@@ -443,6 +444,7 @@ var ViewModel = function() {
 				name: self.scheduleName(),
 				date: self.scheduleDate(),
 				url: self.scheduleUrl(),
+				activeEvent: self.scheduleActiveEvent(),
 				csrfmiddlewaretoken: window.CSRF_TOKEN,
 			}
 		})
@@ -460,7 +462,6 @@ var ViewModel = function() {
 					scheduledEnd: d.scheduledEnd,
 					actualEnd: d.actualEnd,
 					done: d.done,
-					active: d.active,
 					name: d.name,
 					speaker: d.speaker,
 					csrfmiddlewaretoken: window.CSRF_TOKEN,

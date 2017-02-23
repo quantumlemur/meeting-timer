@@ -15,13 +15,15 @@ def timer(request, url=''):
         instance = schedulerInstance.objects.get(url=url)
         name = instance.name
         date = instance.date.date()
+        activeEvent = instance.activeEvent
         isNew = 'false'
     except schedulerInstance.DoesNotExist:
         if len(url) == 0:
             return redirect('/scheduleEditor/' + urlsafe_b64encode(uuid.uuid4().bytes)[:5].decode('utf-8'))
         name = 'Event Name'
+        activeEvent = ''
         date = '2016-02-15'
-    return render(request, 'timer/timer.html', {'url': url, 'name': name, 'date': date, 'isNew': isNew})
+    return render(request, 'timer/timer.html', {'url': url, 'name': name, 'date': date, 'isNew': isNew, 'activeEvent': activeEvent})
 
 def timerControl(request, url=''):
     isNew = 'true'
@@ -29,13 +31,15 @@ def timerControl(request, url=''):
         instance = schedulerInstance.objects.get(url=url)
         name = instance.name
         date = instance.date.date()
+        activeEvent = instance.activeEvent
         isNew = 'false'
     except schedulerInstance.DoesNotExist:
         if len(url) == 0:
             return redirect('/scheduleEditor/' + urlsafe_b64encode(uuid.uuid4().bytes)[:5].decode('utf-8'))
         name = 'Event Name'
+        activeEvent = ''
         date = '2016-02-15'
-    return render(request, 'timer/timerControl.html', {'url': url, 'name': name, 'date': date, 'isNew': isNew})
+    return render(request, 'timer/timerControl.html', {'url': url, 'name': name, 'date': date, 'isNew': isNew, 'activeEvent': activeEvent})
 
 def scheduleEditor(request, url=''):
     isNew = 'true'
@@ -43,10 +47,12 @@ def scheduleEditor(request, url=''):
         instance = schedulerInstance.objects.get(url=url)
         name = instance.name
         date = instance.date.date()
+        activeEvent = instance.activeEvent
         isNew = 'false'
     except schedulerInstance.DoesNotExist:
         if len(url) == 0:
             return redirect('/scheduleEditor/' + urlsafe_b64encode(uuid.uuid4().bytes)[:5].decode('utf-8'))
         name = 'Event Name'
+        activeEvent = ''
         date = '2016-02-15'
-    return render(request, 'timer/scheduleEditor.html', {'url': url, 'name': name, 'date': date, 'isNew': isNew})
+    return render(request, 'timer/scheduleEditor.html', {'url': url, 'name': name, 'date': date, 'isNew': isNew, 'activeEvent': activeEvent})

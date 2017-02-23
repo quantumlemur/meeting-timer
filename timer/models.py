@@ -14,6 +14,7 @@ class schedulerInstance(models.Model):
     date = models.DateTimeField()
     name = models.CharField(max_length=200)
     url = models.CharField(max_length=5)
+    activeEvent = models.IntegerField()
 
 class Event(models.Model):
     instanceUrl = models.CharField(max_length=5)
@@ -22,6 +23,5 @@ class Event(models.Model):
     scheduledEnd = models.IntegerField()
     actualEnd = models.IntegerField()
     done = models.BooleanField()
-    active = models.BooleanField()
     name = models.CharField(max_length=200)
     speaker = models.CharField(max_length=200)

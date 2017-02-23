@@ -18,7 +18,7 @@
 	</div>
 	<div class=controlsPane>
 		<div class=infoPane>
-			<h1>Current Event</h1>
+			<h1 data-bind="text: active() ? 'Current Event' : 'Upcoming Event'"></h1>
 			<div class=smallTimerBox data-bind="css: timeStatusClass">
 			  <span data-bind='text: parsedTime'></span>
 			</div>
@@ -57,13 +57,16 @@
 		</div>
 		<div class="buttonPane">
 			<p>
-				<button id="endButton" type="button" class="btn btn-lg btn-block" disabled="disabled" data-bind="click: endEvent">End current event</button>
+				<button id="endButton" type="button" class="btn btn-lg btn-block" data-bind="click: endEvent, css:{ 'disabled': !active() }">End current event</button>
 			</p>
 			<p>
 				<button id="startButton" type="button" class="btn btn-lg btn-block" data-bind="click: startEvent">Start event</button>
 			</p>
 			<hr>
 			<h1>Controls</h1>
+			<p>
+				<button type="button" class="btn btn-lg btn-block" data-bind="click:controlResetDay">Reset day to Scheduled agenda</button>
+			</p>
 			<p>
 				<button type="button" class="btn btn-lg btn-block" data-bind="css: { 'btn-primary active': controlAutoStart }, click:controlSetAutoStart">Automatically start next event</button>
 			</p>
@@ -90,8 +93,6 @@
 
 
 	</div>
-
-	<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; window._initialScheduleName="{{name}}"; window._initialScheduleDate="{{date}}"; window._initialScheduleUrl="{{url}}"; window._isNew="{{isNew}}";</script>
 	<script src="../static/timerControl.js"></script>
 </body>
 {% endblock %}

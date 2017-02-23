@@ -12,12 +12,14 @@ def saveSchedule(request):
     url = request.POST['url']
     name = request.POST['name']
     date = request.POST['date']
+    activeEvent = request.POST['activeEvent']
     try:
         instance = schedulerInstance.objects.get(url=url)
         instance.name = name
         instance.date = dateutil.parser.parse(date)
+        instance.activeEvent = activeEvent
     except schedulerInstance.DoesNotExist:
-        instance = schedulerInstance(url=url, name=name, date=dateutil.parser.parse(date))
+        instance = schedulerInstance(url=url, name=name, date=dateutil.parser.parse(date), activeEvent=activeEvent)
     instance.save()
     return HttpResponse('I think it worked')
 
@@ -33,7 +35,6 @@ def saveEvent(request):
     event.scheduledEnd = int(p['scheduledEnd'])
     event.actualEnd = int(p['actualEnd'])
     event.done = p['done'] == 'true'
-    event.active = p['active'] == 'true'
     event.name = p['name']
     event.speaker = p['speaker']
     event.save()

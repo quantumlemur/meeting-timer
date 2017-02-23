@@ -6,12 +6,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://d3js.org/d3-path.v1.min.js"></script>
-<script src="../static/moment.min.js"></script>
 </head>
 <body>
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; window._initialScheduleName="{{name}}"; window._initialScheduleDate="{{date}}"; window._initialScheduleUrl="{{url}}"; window._isNew="{{isNew}}"; window.initialActiveEvent="{{activeEvent}}";</script>
 
 
 {% block content %}{% endblock %}
-
 </body>
 </html>

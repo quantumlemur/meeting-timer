@@ -9,6 +9,7 @@ var ViewModel = function() {
 	self.scheduleName = ko.observable(window._initialScheduleName)
 	self.scheduleDate = ko.observable(window._initialScheduleDate)
 	self.scheduleUrl = ko.observable(window._initialScheduleUrl)
+	self.activeEvent = ko.observable(window._initialActiveEvent)
 	self.scheduleUnsaved = ko.observable(window._isNew == 'true')
 
 	self.RofL = (100-gutterWidth)/2
@@ -22,8 +23,11 @@ var ViewModel = function() {
 	self.warningTime = ko.observable('')
 	self.supposedToEnd = ko.observable('')
 	self.timeStatusClass = ko.observable('normalTime')
+	self.upcomingEvent = ko.observable('')
 
-	self.active = ko.observable(false)
+	self.active = ko.computed(function() {
+		return self.activeEvent() != -1
+	})
 	self.flash = ko.observable(true)
 
 
@@ -83,7 +87,7 @@ var ViewModel = function() {
 
 
 	var formatDifference = function(diff) {
-		diff = diff/1000/60
+		diff = Math.floor(diff/1000/60)
 		var out = ''
 		if (diff == 0) {
 			out = '--'
@@ -102,6 +106,15 @@ var ViewModel = function() {
 
 	self.controlSetMaintainDayEnd = function() {
 		self.controlMaintainDayEnd(!self.controlMaintainDayEnd())
+	}
+
+	self.controlResetDay = function() {
+		data.forEach(function(d) {
+			d.actualStart = d.scheduledStart
+			d.actualEnd = d.scheduledEnd
+			d.done = false
+		})
+		updateTimings()
 	}
 
 
@@ -136,11 +149,13 @@ var ViewModel = function() {
 		self.scheduleUnsaved(true)
 	}
 	function draggedSchedule(d) {
-		var duration = d.actualEnd - d.actualStart
-		d.actualStart = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
-		d.actualEnd = d.actualStart + duration
-		d3.select(this)
-			.attr('transform', function(d) { return 'translate(' + self.LofR + ',' + d3.event.y + ')' })
+		if (d.pk != self.activeEvent()) {
+			var duration = d.actualEnd - d.actualStart
+			d.actualStart = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
+			d.actualEnd = d.actualStart + duration
+			d3.select(this)
+				.attr('transform', function(d) { return 'translate(' + self.LofR + ',' + d3.event.y + ')' })
+		}
 	}
 	function dragend(d) {
 		d3.select(this).style('opacity', '1')
@@ -162,13 +177,15 @@ var ViewModel = function() {
 	}
 	function resizedTop(d) {
 		console.log(d3.event.y)
-		d.actualStart = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
-		d3.select(this.parentNode)
-			.attr('transform', function(d) { return 'translate(1,' + d3.event.y + ')' })
-		d3.select(this.parentNode).select('.eventRect')
-			.attr('height', function(d) { return self.timeScale(d.actualEnd) - d3.event.y })
-		d3.select(this.parentNode).select('.eventText')
-			.text(function(d) { return d.name + ' (' + ((d.actualEnd - d.actualStart)/60) + ' m)' })
+		if (d.pk != self.activeEvent()) {
+			d.actualStart = Math.floor(self.timeScale.invert(d3.event.y)/60)*60
+			d3.select(this.parentNode)
+				.attr('transform', function(d) { return 'translate(1,' + d3.event.y + ')' })
+			d3.select(this.parentNode).select('.eventRect')
+				.attr('height', function(d) { return self.timeScale(d.actualEnd) - d3.event.y })
+			d3.select(this.parentNode).select('.eventText')
+				.text(function(d) { return d.name + ' (' + ((d.actualEnd - d.actualStart)/60) + ' m)' })
+		}
 	}
 	function resizeEnd(d) {
 		d3.select(this.parentNode)
@@ -208,7 +225,6 @@ var ViewModel = function() {
 			scheduledEnd: time + 60*60,
 			actualEnd: time + 60*60,
 			done: false,
-			active: false,
 			name: 'Event Name',
 			speaker: 'Event Speaker',
 		})
@@ -217,17 +233,31 @@ var ViewModel = function() {
 	}
 
 	self.startEvent = function() {
-		self.active(true)
-		if ($('#endButton').attr('disabled')=='disabled') {
-			$('#endButton').removeAttr('disabled')
-		}
 
 		e = self.currentEvent()
-		e.active = true
+		self.activeEvent(e.pk)
 		var duration = e.actualEnd - e.actualStart
 		var d = new Date()
-		e.actualStart = d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds()
-		e.actualEnd = e.actualStart + duration
+		var t =  d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds()
+		var diff = t - e.actualStart
+		if (diff > 0) {
+
+			if (self.controlMaintainDayEnd()) {
+				// if we want to maintain the day ending time, then shorten the event the correct proportional amount
+				var dayEndTime = data[data.length-1].scheduledEnd
+				var remainingDayTime = dayEndTime - e.actualStart
+				var timeProportion = (e.actualEnd - e.actualStart) / remainingDayTime
+				var endShift = diff*timeProportion
+				e.actualEnd -= endShift
+			} 
+			// if we aren't maintaining the day ending time, then just shift the ending back to maintain the event duration
+			e.actualEnd += diff
+			// shift the event start back to remove the overlap
+			e.actualStart += diff
+		} else {
+			e.actualStart = t
+			e.actualEnd = e.actualStart + duration
+		}
 
 
 		self.supposedToEnd(e.actualEnd)
@@ -238,11 +268,9 @@ var ViewModel = function() {
 				data[i] = e
 			}
 		}
-		self.saveEvent(e)
-
 		updateTimings()
 
-		self.postCurrentEventInfo()
+		self.saveSchedule()
 
 		console.log(data)
 	}
@@ -250,32 +278,33 @@ var ViewModel = function() {
 
 	self.endEvent = function() {
 		if (self.active()) {
-			self.active(false)
-			$('#endButton').attr('disabled', 'disabled')
-
 			e = self.currentEvent()
-			e.active = false
+			self.activeEvent(-1)
 			var d = new Date()
 			e.actualEnd = d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds()
+			e.done = true
 
 			self.supposedToEnd(e.actualEnd)
 			self.updateParsedTime()
 			self.currentEvent(e)
 			for (var i=0; i<data.length; i++) {
-				if (data[i].id == e.id) {
+				if (data[i].pk == e.pk) {
 					data[i] = e
 					if (i+1<data.length) {
 						self.currentEvent(data[i+1])
+						self.upcomingEvent(data[i+1].pk)
+					} else {
+						self.currentEvent(null)
+						self.upcomingEvent(null)
 					}
 				}
 			}
-			self.saveEvent(e)
-
 			updateTimings()
 
 			if (self.controlAutoStart()) {
 				self.startEvent()
 			}
+			self.saveSchedule()
 		}
 	}
 
@@ -359,32 +388,46 @@ var ViewModel = function() {
 				e.actualEnd = t
 				self.currentEvent.valueHasMutated()
 			}
-		} else {
-			// if we aren't running an event and it hasn't started, move it back
-			if (e.actualStart - t < 0) {
-				var diff = t - e.actualStart
-				e.actualEnd + diff
-				e.actualStart = t
-				self.currentEvent.valueHasMutated()
-			}
 		}
-
 		// go through all the events and update their timings and durations here
 		for (var i=0; i<data.length; i++) {
-			var e = data[i]
+			e = data[i]
 			// see if there's overlap between events
 			var diff = 0
 			if (i>0) {
 				diff = data[i-1].actualEnd - e.actualStart
-				if (diff > 0) {
-					e.actualStart += diff
-					e.actualEnd += diff
-					self.scheduleUnsaved(true)
-					// console.log('new time', e.scheduledStart/60)
-				}
+				// console.log(i, diff)
 			}
 
+			if (diff < 0) {
+				// if we have an open gap
+				var endDiff = data[data.length-1].scheduledEnd - data[data.length-1].actualEnd
+				if (endDiff < 0) {
+					// and we're running behind schedule
+					// then move the event up to fill in the gap
+					// console.log('running behind', diff/1000/60, endDiff/1000/60)
+					e.actualStart += Math.max(diff, endDiff)
+					e.actualEnd += Math.max(diff, endDiff)
+				}
+			}
+			if (diff > 0) {
+
+				if (self.controlMaintainDayEnd()) {
+					// if we want to maintain the day ending time, then shorten the event the correct proportional amount
+					var dayEndTime = data[data.length-1].scheduledEnd
+					var remainingDayTime = dayEndTime - e.actualStart
+					var timeProportion = (e.actualEnd - e.actualStart) / remainingDayTime
+					var endShift = diff*timeProportion
+					e.actualEnd -= endShift
+				} 
+				// if we aren't maintaining the day ending time, then just shift the ending back to maintain the event duration
+				e.actualEnd += diff
+				// shift the event start back to remove the overlap
+				e.actualStart += diff
+			}
+			self.saveEvent(e)
 		}
+
 		updateTimelineDisplay()
 		// for (var i=0; i<data.length; i++) {
 		// 	console.log(data[i].actualStartTime.format('LT'), "     ", data[i].actualEndTime.format('LT'))
@@ -443,6 +486,9 @@ var ViewModel = function() {
 					.attr('x', edgePadding)
 					.attr('width', RofL-(2*edgePadding))
 					.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
+					.style('opacity', function(d) { return d.done ? 0.3 : 1 })
+					.style('stroke', 'black')
+					.style('stroke-width', function(d) { return d.pk==self.activeEvent()||d.pk==self.upcomingEvent() ? 5 : 0 })
 
 				d3.select(this)
 					.append('rect')
@@ -463,7 +509,7 @@ var ViewModel = function() {
 				d3.select(this)
 					.append('text')
 					.attr('class', 'eventText')
-					.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
+					.text(function(d) { return d.name + ' (' + Math.floor((d.scheduledEnd - d.scheduledStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
 					.attr('x', 2*edgePadding)
 					.attr('y', edgePadding)
 					.style('cursor', 'text')
@@ -495,6 +541,11 @@ var ViewModel = function() {
 					.attr('x', edgePadding)
 					.attr('width', RofL-(2*edgePadding))
 					.attr('height', function(d) { return self.timeScale(d.actualEnd) - self.timeScale(d.actualStart) })
+					.style('opacity', function(d) { return d.done ? 0.3 : 1 })
+					.style('stroke', 'black')
+					.style('stroke-width', function(d) { return d.pk==self.activeEvent()||d.pk==self.upcomingEvent() ? 5 : 0 })
+					.style('cursor', 'move')
+
 
 				d3.select(this)
 					.append('rect')
@@ -519,7 +570,7 @@ var ViewModel = function() {
 				d3.select(this)
 					.append('text')
 					.attr('class', 'eventText')
-					.text(function(d) { return d.name + ' (' + ((d.actualEnd - d.actualStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
+					.text(function(d) { return d.name + ' (' + Math.floor((d.actualEnd - d.actualStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
 					.attr('x', 2*edgePadding)
 					.attr('y', edgePadding)
 					.style('cursor', 'text')
@@ -553,18 +604,22 @@ var ViewModel = function() {
 			.duration(250)
 			.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
 			.attr('fill', function(d) { return color(d.pk) })
+			.style('opacity', function(d) { return d.done ? 0.3 : 1 })
+			.style('stroke-width', function(d) { return d.pk==self.activeEvent()||d.pk==self.upcomingEvent() ? 5 : 0 })
 		actualEvents.select('.eventRect').transition()
 			.duration(250)
 			.attr('height', function(d) { return self.timeScale(d.actualEnd) - self.timeScale(d.actualStart) })
 			.attr('fill', function(d) { return color(d.pk) })
+			.style('opacity', function(d) { return d.done ? 0.3 : 1 })
+			.style('stroke-width', function(d) { return d.pk==self.activeEvent()||d.pk==self.upcomingEvent() ? 5 : 0 })
 
 
 		scheduledEvents.select('.eventText')
-			.text(function(d) { return d.name + ' (' + ((d.scheduledEnd - d.scheduledStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
+			.text(function(d) { return d.name + ' (' + Math.floor((d.scheduledEnd - d.scheduledStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
 		scheduledEvents.select('.resizeBottom')
 			.attr('y', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) - edgePadding })
 		actualEvents.select('.eventText')
-			.text(function(d) { return d.name + ' (' + ((d.actualEnd - d.actualStart)/60) + ' m) ' + formatTime(d.actualStart) + ' - ' + formatTime(d.actualEnd) })
+			.text(function(d) { return d.name + ' (' + Math.floor((d.actualEnd - d.actualStart)/60) + ' m) ' + formatTime(d.actualStart) + ' - ' + formatTime(d.actualEnd) })
 		actualEvents.select('.resizeBottom')
 			.attr('y', function(d) { return self.timeScale(d.actualEnd) - self.timeScale(d.actualStart) - edgePadding })
 
@@ -716,9 +771,23 @@ var ViewModel = function() {
 				scheduledEnd: e.scheduledEnd,
 				actualEnd: e.actualEnd,
 				done: e.done,
-				active: e.active,
 				name: e.name,
 				speaker: e.speaker,
+				csrfmiddlewaretoken: window.CSRF_TOKEN,
+			}
+		})
+	}
+
+	self.saveSchedule = function() {
+		$.ajax({
+			url: '../saveSchedule',
+			type: 'POST',
+			datatype: 'json',
+			data: {
+				name: self.scheduleName(),
+				date: self.scheduleDate(),
+				url: self.scheduleUrl(),
+				activeEvent: self.activeEvent(),
 				csrfmiddlewaretoken: window.CSRF_TOKEN,
 			}
 		})
@@ -746,6 +815,7 @@ var ViewModel = function() {
 					return a.actualStart - b.actualStart
 				})
 				self.currentEvent(data[0])
+				self.upcomingEvent(data[0].pk)
 				render()
 				updateTimings()
 			}
