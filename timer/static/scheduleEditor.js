@@ -16,6 +16,7 @@ var ViewModel = function() {
 	self.LofR = 100-self.RofL
 
 	var data = []
+	var deletedEvents = []
 
 
 
@@ -197,6 +198,14 @@ var ViewModel = function() {
 				})
 	}
 
+	var deleteEvent = function(d) {
+		d3.event.stopPropagation()
+		deletedEvents.push(d.pk)
+		var index = data.indexOf(d)
+		data.splice(index, 1)
+		updateTimelineDisplay()
+	}
+
 
 
 	var updateTimings = function() {
@@ -283,6 +292,22 @@ var ViewModel = function() {
 					.attr('width', RofL-(2*edgePadding))
 					.attr('height', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) })
 					.style('cursor', 'move')
+
+				d3.select(this)
+					.append('rect')
+					.attr('class', 'adjustButton')
+					.attr('x', RofL - (2*edgePadding) - 60)
+					.attr('y', edgePadding)
+					.attr('width', 60)
+					.attr('height', 30)
+					.on('click', deleteEvent)
+				d3.select(this)
+					.append('text')
+					.attr('class', 'adjustButtonText')
+					.text('Delete')
+					.attr('x', RofL - edgePadding - 60)
+					.attr('y', edgePadding + 20)
+					.on('click', deleteEvent)
 
 				d3.select(this)
 					.append('rect')
@@ -446,32 +471,47 @@ var ViewModel = function() {
 				url: self.scheduleUrl(),
 				activeEvent: self.scheduleActiveEvent(),
 				csrfmiddlewaretoken: window.CSRF_TOKEN,
+			},
+			success: function() {
+				data.forEach(function(d) {
+					$.ajax({
+						url: '../saveEvent',
+						type: 'POST',
+						datatype: 'json',
+						data: {
+							instanceUrl: self.scheduleUrl(),
+							pk: d.pk,
+							scheduledStart: d.scheduledStart,
+							actualStart: d.actualStart,
+							scheduledEnd: d.scheduledEnd,
+							actualEnd: d.actualEnd,
+							done: d.done,
+							name: d.name,
+							speaker: d.speaker,
+							csrfmiddlewaretoken: window.CSRF_TOKEN,
+						},
+						success: function(msg) {
+							d.pk = msg.pk
+							updateTimelineDisplay()
+						}
+					})
+				})
+				deletedEvents.forEach(function(d) {
+					$.ajax({
+						url: '../deleteEvent',
+						type: 'POST',
+						datatype: 'json',
+						data: {
+							pk: d,
+							csrfmiddlewaretoken: window.CSRF_TOKEN,
+						}
+					})
+				})
+				deletedEvents = []
 			}
 		})
 
-		data.forEach(function(d) {
-			$.ajax({
-				url: '../saveEvent',
-				type: 'POST',
-				datatype: 'json',
-				data: {
-					instanceUrl: self.scheduleUrl(),
-					pk: d.pk,
-					scheduledStart: d.scheduledStart,
-					actualStart: d.actualStart,
-					scheduledEnd: d.scheduledEnd,
-					actualEnd: d.actualEnd,
-					done: d.done,
-					name: d.name,
-					speaker: d.speaker,
-					csrfmiddlewaretoken: window.CSRF_TOKEN,
-				},
-				success: function(msg) {
-					d.pk = msg.pk
-					updateTimelineDisplay()
-				}
-			})
-		})
+
 
 		self.scheduleUnsaved(false)
 	}

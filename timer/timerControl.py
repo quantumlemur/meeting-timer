@@ -6,8 +6,6 @@ from django.http import HttpResponse
 
 from .models import CurrentEvent
 
-from django.views.decorators.csrf import csrf_exempt
-
 
 def currentTimerInfo(request):
     print(request.POST)

@@ -26,6 +26,11 @@ def saveSchedule(request):
 def saveEvent(request):
     p = request.POST
     try:
+        instance = schedulerInstance.objects.get(url=url)
+    except schedulerInstance.DoesNotExist:
+        instance = schedulerInstance(url=url, name=name, date=dateutil.parser.parse(date), activeEvent=activeEvent)
+    instance.save()
+    try:
         event = Event.objects.get(pk=int(p['pk']))
     except (Event.DoesNotExist, ValueError):
         event = Event()

@@ -3,6 +3,7 @@ var ViewModel = function() {
 
 	var gutterWidth = 150
 	var edgePadding = 10
+	var buttonSize = 30
 
 	var color = d3.scale.category20c()
 
@@ -37,7 +38,7 @@ var ViewModel = function() {
 			if (self.active()) {
 				var d = new Date()
 				var now = d.getHours()*3600 + d.getMinutes()*60 + d.getSeconds()
-				time = self.currentEvent().actualEnd - d
+				time = self.currentEvent().actualEnd - now
 			} else {
 				time = self.currentEvent().actualEnd - self.currentEvent().actualStart
 			}
@@ -345,7 +346,7 @@ var ViewModel = function() {
 		var eventBase = d3.select(this.parentNode)
 		var form = eventBase.append('foreignObject').attr('class', 'textEditorBox')
 			.attr('x', edgePadding*2)
-			.attr('y', edgePadding*2.5)
+			.attr('y', edgePadding + 40)
 			.attr('font-size', '.9em')
 		var input = form.append('xhtml:form')
 			.append('input')
@@ -370,6 +371,96 @@ var ViewModel = function() {
 						d3.select('.textEditorBox').remove()
 					}
 				})
+	}
+
+	var startTimeClick = function(d) {
+		d3.event.stopPropagation()
+		var eventBase = d3.select(this.parentNode)
+		var form = eventBase.append('foreignObject').attr('class', 'textEditorBox')
+			.attr('x', edgePadding*2)
+			.attr('y', edgePadding + 18)
+			.attr('font-size', '.9em')
+		var input = form.append('xhtml:form')
+			.append('input')
+				.style('width', '100px')
+				.on('mousedown', function(d) { d3.event.stopPropagation() })
+				.attr('value', function() {
+					this.focus()
+					return formatTime(d.actualStart)
+				})
+				.on('blur', function() {
+					var i = new Date('2000-01-01 ' + input.node().value)
+					var newtime = i.getHours()*3600 + i.getMinutes()*60 + i.getSeconds()
+					if (!isNaN(newtime)) {
+						d.actualStart = newtime
+					}
+					eventBase.select('.startTimeText')
+						.text(function(d) { return formatTime(d.actualStart) })
+					d3.select('.textEditorBox').remove()
+					updateTimings()
+				})
+				.on('keypress', function() {
+					if (d3.event.keyCode == 13) {
+						d3.event.preventDefault()
+						var i = new Date('2000-01-01 ' + input.node().value)
+						var newtime = i.getHours()*3600 + i.getMinutes()*60 + i.getSeconds()
+						if (!isNaN(newtime)) {
+							d.actualStart = newtime
+						}
+						eventBase.select('.startTimeText')
+							.text(function(d) { return formatTime(d.actualStart) })
+						d3.select('.textEditorBox').remove()
+						updateTimings()
+					}
+				})
+	}
+
+	var endTimeClick = function(d) {
+		d3.event.stopPropagation()
+		var eventBase = d3.select(this.parentNode)
+		var form = eventBase.append('foreignObject').attr('class', 'textEditorBox')
+			.attr('x', edgePadding*2 + 100)
+			.attr('y', edgePadding + 18)
+			.attr('font-size', '.9em')
+		var input = form.append('xhtml:form')
+			.append('input')
+				.style('width', '100px')
+				.on('mousedown', function(d) { d3.event.stopPropagation() })
+				.attr('value', function() {
+					this.focus()
+					return formatTime(d.actualEnd)
+				})
+				.on('blur', function() {
+					var i = new Date('2000-01-01 ' + input.node().value)
+					var newtime = i.getHours()*3600 + i.getMinutes()*60 + i.getSeconds()
+					if (!isNaN(newtime)) {
+						d.actualEnd = newtime
+					}
+					eventBase.select('.endTimeText')
+						.text(function(d) { return formatTime(d.actualEnd) })
+					d3.select('.textEditorBox').remove()
+					updateTimings()
+				})
+				.on('keypress', function() {
+					if (d3.event.keyCode == 13) {
+						d3.event.preventDefault()
+						var i = new Date('2000-01-01 ' + input.node().value)
+						var newtime = i.getHours()*3600 + i.getMinutes()*60 + i.getSeconds()
+						if (!isNaN(newtime)) {
+							d.actualEnd = newtime
+						}
+						eventBase.select('.endTimeText')
+							.text(function(d) { return formatTime(d.actualEnd) })
+						d3.select('.textEditorBox').remove()
+						updateTimings()
+					}
+				})
+	}
+
+	d3.selection.prototype.moveToFront = function() {
+		return this.each(function() {
+			this.parentNode.appendChild(this)
+		})
 	}
 
 
@@ -532,7 +623,6 @@ var ViewModel = function() {
 			.attr('id', 'actualEvent')
 			.attr('class', 'event')
 			.attr('transform', function(d) { return 'translate(' + self.LofR + ',' + self.timeScale(d.actualStart) + ')' })
-			.call(dragActual)
 			.each(function(d) {
 				d3.select(this)
 					.append('rect')
@@ -544,44 +634,44 @@ var ViewModel = function() {
 					.style('opacity', function(d) { return d.done ? 0.3 : 1 })
 					.style('stroke', 'black')
 					.style('stroke-width', function(d) { return d.pk==self.activeEvent()||d.pk==self.upcomingEvent() ? 5 : 0 })
-					.style('cursor', 'move')
-
-
-				d3.select(this)
-					.append('rect')
-					.style('opacity', 0)
-					.attr('x', edgePadding)
-					.attr('width', RofL-(2*edgePadding))
-					.attr('height', edgePadding)
-					.style('cursor', 'n-resize')
-					.call(resizeTop)
-
-				d3.select(this)
-					.append('rect')
-					.attr('class', 'resizeBottom')
-					.style('opacity', 0)
-					.attr('x', edgePadding)
-					.attr('y', function(d) { return self.timeScale(d.actualEnd) - self.timeScale(d.actualStart) - edgePadding })
-					.attr('width', RofL-(2*edgePadding))
-					.attr('height', edgePadding)
-					.style('cursor', 'n-resize')
-					.call(resizeBottom)
 				
 				d3.select(this)
 					.append('text')
 					.attr('class', 'eventText')
-					.text(function(d) { return d.name + ' (' + Math.floor((d.actualEnd - d.actualStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
+					.text(function(d) { return d.name + ' (' + Math.floor((d.actualEnd - d.actualStart)/60) + ' m)' })
 					.attr('x', 2*edgePadding)
 					.attr('y', edgePadding)
 					.style('cursor', 'text')
 					.on('click', textClick)
+				d3.select(this)
+					.append('text')
+					.attr('class', 'startTimeText')
+					.text(function(d) { return formatTime(d.actualStart)})
+					.attr('x', 2*edgePadding)
+					.attr('y', edgePadding + 23)
+					.style('cursor', 'text')
+					.on('click', startTimeClick)
+				d3.select(this)
+					.append('text')
+					.attr('class', 'timeText')
+					.text('-')
+					.attr('x', 2*edgePadding + 80)
+					.attr('y', edgePadding + 23)
+				d3.select(this)
+					.append('text')
+					.attr('class', 'endTimeText')
+					.text(function(d) { return formatTime(d.actualEnd) })
+					.attr('x', 2*edgePadding + 100)
+					.attr('y', edgePadding + 23)
+					.style('cursor', 'text')
+					.on('click', endTimeClick)
 				
 				d3.select(this)
 					.append('text')
 					.attr('class', 'speakerText')
 					.text(function(d, i) { return d.speaker })
 					.attr('x', 2*edgePadding)
-					.attr('y', 3*edgePadding)
+					.attr('y', edgePadding + 45)
 					.style('cursor', 'text')
 					.on('click', speakerClick)
 			})
@@ -615,13 +705,17 @@ var ViewModel = function() {
 
 
 		scheduledEvents.select('.eventText')
-			.text(function(d) { return d.name + ' (' + Math.floor((d.scheduledEnd - d.scheduledStart)/60) + ' m) ' + formatTime(d.scheduledStart) + ' - ' + formatTime(d.scheduledEnd) })
+			.text(function(d) { return d.name + ' (' + Math.floor((d.scheduledEnd - d.scheduledStart)/60) + ' m)' })
 		scheduledEvents.select('.resizeBottom')
 			.attr('y', function(d) { return self.timeScale(d.scheduledEnd) - self.timeScale(d.scheduledStart) - edgePadding })
 		actualEvents.select('.eventText')
-			.text(function(d) { return d.name + ' (' + Math.floor((d.actualEnd - d.actualStart)/60) + ' m) ' + formatTime(d.actualStart) + ' - ' + formatTime(d.actualEnd) })
-		actualEvents.select('.resizeBottom')
-			.attr('y', function(d) { return self.timeScale(d.actualEnd) - self.timeScale(d.actualStart) - edgePadding })
+			.text(function(d) { return d.name + ' (' + Math.floor((d.actualEnd - d.actualStart)/60) + ' m)' })
+		actualEvents.select('.startTimeText')
+			.text(function(d) { return formatTime(d.actualStart)})
+		actualEvents.select('.endTimeText')
+			.text(function(d) { return formatTime(d.actualEnd) })
+
+
 
 
 
@@ -817,6 +911,7 @@ var ViewModel = function() {
 				self.currentEvent(data[0])
 				self.upcomingEvent(data[0].pk)
 				render()
+
 				updateTimings()
 			}
 		})

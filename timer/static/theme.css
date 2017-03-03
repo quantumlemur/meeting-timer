@@ -151,7 +151,7 @@ html, body {
 	shape-rendering: crispEdges;
 }
 
-.eventText {
+.eventText, .startTimeText, .endTimeText, .timeText {
 	font-family: sans-serif;
 	font-size: 1.2em;
 	font-weight: bold;
@@ -191,4 +191,20 @@ html, body {
 
 .h1 {
 	text-align: center;
+}
+
+.adjustButton {
+	fill: lightgray;
+	stroke: black;
+	stroke-width: 1px;
+	opacity: .7;
+	rx: 5;
+	ry: 5;
+	cursor: pointer;
+}
+
+.adjustButtonText {
+	cursor: pointer;
+	text-anchor: middle;
+	alignment-baseline: middle;
 }
